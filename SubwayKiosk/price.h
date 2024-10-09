@@ -11,7 +11,8 @@ private:
     int price15[22];    // 15cm 가격
     int price30[22];    // 30cm 가격
     int toppingPrice[7]; // 추가 토핑 가격
-
+    int cookiePrice[5]; // 쿠키 가격
+    
     void InitPrices();
 public:
     int GetSandwichPrice(MainSandwich option, bool is15);

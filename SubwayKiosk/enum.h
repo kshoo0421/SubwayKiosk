@@ -99,4 +99,19 @@ enum class Cookie : int {
     ChocoChip = 3,              // 초코칩
     DoubleChocoChip = 4         // 더블초코칩
 };
+
+/* 음료 */
+enum class Drink : int {
+    Coke = 0,   // 콜라
+    Cider = 1,  // 사이다
+    Fanta = 2  // 환타
+};
+
+/* 갑자칩 */
+enum class Chips : int {
+    PokaChip = 0,
+    SwingChip = 1,
+    Nacho = 2,
+    Pringles = 3
+};
 #endif // ENUM_H
