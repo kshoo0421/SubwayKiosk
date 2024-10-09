@@ -259,6 +259,35 @@
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginTargets-debug.cmake",
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginTargets-relwithdebinfo.cmake",
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginAdditionalTargetInfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlConfigVersion.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlConfigVersionImpl.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlConfig.cmake",
+		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeFindDependencyMacro.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlDependencies.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlTargets.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlTargets-debug.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlTargets-relwithdebinfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlAdditionalTargetInfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlVersionlessTargets.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6SqlPlugins.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QODBCDriverPluginConfig.cmake",
+		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeFindDependencyMacro.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QODBCDriverPluginTargets.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QODBCDriverPluginTargets-debug.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QODBCDriverPluginTargets-relwithdebinfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QODBCDriverPluginAdditionalTargetInfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QPSQLDriverPluginConfig.cmake",
+		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeFindDependencyMacro.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QPSQLDriverPluginTargets.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QPSQLDriverPluginTargets-debug.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QPSQLDriverPluginTargets-relwithdebinfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QPSQLDriverPluginAdditionalTargetInfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginConfig.cmake",
+		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeFindDependencyMacro.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginTargets.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginTargets-debug.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginTargets-relwithdebinfo.cmake",
+		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginAdditionalTargetInfo.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk",
@@ -267,6 +296,24 @@
 	"DEP_FILE_RULE_NAME" : "SubwayKiosk_autogen/timestamp",
 	"HEADERS" : 
 	[
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/DatabaseManager.h",
+			"MU",
+			"EWIEGA46WW/moc_DatabaseManager.cpp",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.h",
+			"MU",
+			"EWIEGA46WW/moc_SQLManager.cpp",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.h",
+			"MU",
+			"EWIEGA46WW/moc_ServerManager.cpp",
+			null
+		],
 		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Singleton.h",
 			"MU",
@@ -283,6 +330,12 @@
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/enum.h",
 			"MU",
 			"EWIEGA46WW/moc_enum.cpp",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/json.hpp",
+			"MU",
+			"EWIEGA46WW/moc_json.cpp",
 			null
 		],
 		[
@@ -305,6 +358,7 @@
 	[
 		"QT_CORE_LIB",
 		"QT_GUI_LIB",
+		"QT_SQL_LIB",
 		"QT_WIDGETS_LIB",
 		"UNICODE",
 		"WIN32",
@@ -326,7 +380,8 @@
 		"C:/Qt/6.5.3/msvc2019_64/include",
 		"C:/Qt/6.5.3/msvc2019_64/mkspecs/win32-msvc",
 		"C:/Qt/6.5.3/msvc2019_64/include/QtWidgets",
-		"C:/Qt/6.5.3/msvc2019_64/include/QtGui"
+		"C:/Qt/6.5.3/msvc2019_64/include/QtGui",
+		"C:/Qt/6.5.3/msvc2019_64/include/QtSql"
 	],
 	"MOC_MACRO_NAMES" : 
 	[
@@ -353,7 +408,12 @@
 	"SOURCES" : 
 	[
 		[
-			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/details.cpp",
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.cpp",
 			"MU",
 			null
 		],
