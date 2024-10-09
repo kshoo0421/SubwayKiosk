@@ -31,10 +31,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         DatabaseManager.h
         SQLManager.h
-        ServerManager.h
+       # ServerManager.h
         SQLManager.cpp
         json.hpp
-        ServerManager.cpp
+       # ServerManager.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET SubwayKiosk APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
