@@ -23,17 +23,17 @@ void ServerManager::ConnectToServer() {
         return -1;
     }
 
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(8080);
+    servAddr.sin_family = AF_INET;
+    servAddr.sin_port = htons(8080);
 
     // 2. 서버 주소 설정
-    if (inet_pton(AF_INET, SERVER_ADDR, &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, SERVER_ADDR, &servAddr.sin_addr) <= 0) {
         cerr << "Invalid address/ Address not supported" << endl;
         return -1;
     }
 
     // 3. 서버 연결
-    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+    if (connect(sock, (struct sockaddr *)&servAddr, sizeof(servAddr)) < 0) {
         cerr << "Connection Failed" << endl;
         return -1;
     }

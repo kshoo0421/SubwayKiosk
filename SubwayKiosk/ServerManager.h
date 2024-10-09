@@ -23,7 +23,7 @@ class ServerManager : public Singleton<ServerManager> {
     friend class Singleton<ServerManager>;
 private:
     int sock = 0;
-    struct sockaddr_in serv_addr;
+    struct sockaddr_in servAddr;
     string buffer(BUFFER_SIZE, 0); // 수신용 버퍼
 
     ServerManager();

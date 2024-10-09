@@ -99,54 +99,57 @@ void ServerService() {
         }
 
         // 6-(2) 새 스레드에서 클라이언트 요청 처리
-        threads.emplace_back(thread(handle_client, new_socket));
+        threads.emplace_back(thread(HandleClient, new_socket));
     }
 }
 
 /* 6-(2) 클라이언트 요청 처리 */
-void HandleClient(int client_socket) {
-    char buffer[30000] = {0};
-    read(client_socket, buffer, 30000);
+void HandleClient(int clientSocket) {
+    static int curIdx = 101;
+    string buffer(30000, 0);
+    read(clientSocket, buffer, 30000);
     cout << "Client request: \n" << buffer << endl;
 
     // HTTP 요청에서 본문 추출
     string request(buffer);
-    size_t content_pos = request.find("\r\n\r\n");
+    size_t contentPos = request.find("\r\n\r\n");
     string body = "";
-    if (content_pos != string::npos) {
-        body = request.substr(content_pos + 4);
+    if (contentPos != string::npos) {
+        body = request.substr(contentPos + 4);
     }
 
     // 받은 JSON 데이터 출력
     cout << "Received JSON data: " << body << endl;
 
     // JSON 데이터를 파일에 저장
-    ofstream json_file("/tmp/received_data.json");
-    if (json_file.is_open()) {
-        json_file << body;
-        json_file.close();
-        cout << "JSON data saved to /tmp/received_data.json" << endl;
-    } else {
+    string fileName = "kart " + to_string(curIdx) + ".json";
+    ofstream jsonFile("/tmp/" + fileName);
+    if (jsonFile.is_open()) {
+        jsonFile << body;
+        jsonFile.close();
+        cout << "JSON data saved to /tmp/" << fileName << endl;
+    } 
+    else {
         cerr << "Failed to open file for writing" << endl;
     }
-
     // JSON 응답 생성
-    string response_body = R"({
+    string responseBody = R"({
         "message": "Data received successfully",
         "status": "OK"
-    })";
+        "idx" : ")" + curIdx + "}";
 
     // HTTP 응답 생성
     ostringstream response;
     response << "HTTP/1.1 200 OK\n" << "Content-Type: application/json\n"
-        << "Content-Length: " << response_body.length() << "\n\n"
-        << response_body;
+        << "Content-Length: " << responseBody.length() << "\n\n"
+        << responseBody;
 
     // 응답 전송
-    write(client_socket, response.str().c_str(), response.str().length());
+    write(clientSocket, response.str().c_str(), response.str().length());
 
+    curIdx++;
     // 소켓 닫기
-    close(client_socket);
+    close(clientSocket);
 }
 
 /* 7. 모든 스레드 종료 대기 */
