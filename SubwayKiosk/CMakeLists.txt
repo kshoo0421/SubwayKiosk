@@ -24,16 +24,21 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         enum.h
-        details.h
+
         Singleton.h
-        price.cpp
-        price.h
+
+
 
         DatabaseManager.h
         SQLManager.h
        # ServerManager.h
         SQLManager.cpp
         json.hpp
+        Sandwich.h
+        Sandwhich.cpp
+
+
+
        # ServerManager.cpp
     )
 # Define target properties for Android with Qt 6 as:
