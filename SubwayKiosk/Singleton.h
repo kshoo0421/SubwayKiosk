@@ -14,6 +14,7 @@ private:
 template <typename T>
 class Singleton {
 protected:
+    Singleton() = default;
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;
 
