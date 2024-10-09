@@ -309,15 +309,15 @@
 			null
 		],
 		[
-			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Singleton.h",
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Sandwich.h",
 			"MU",
-			"EWIEGA46WW/moc_Singleton.cpp",
+			"EWIEGA46WW/moc_Sandwich.cpp",
 			null
 		],
 		[
-			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/details.h",
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Singleton.h",
 			"MU",
-			"EWIEGA46WW/moc_details.cpp",
+			"EWIEGA46WW/moc_Singleton.cpp",
 			null
 		],
 		[
@@ -330,12 +330,6 @@
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/json.hpp",
 			"MU",
 			"EWIEGA46WW/moc_json.cpp",
-			null
-		],
-		[
-			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/price.h",
-			"MU",
-			"EWIEGA46WW/moc_price.cpp",
 			null
 		],
 		[
@@ -407,12 +401,12 @@
 			null
 		],
 		[
-			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/main.cpp",
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Sandwhich.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/price.cpp",
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/main.cpp",
 			"MU",
 			null
 		],
