@@ -112,6 +112,7 @@ enum class Chips : int {
     PokaChip = 0,
     SwingChip = 1,
     Nacho = 2,
-    Pringles = 3
+    Pringles = 3,
+    OhPotato = 4
 };
 #endif // ENUM_H
