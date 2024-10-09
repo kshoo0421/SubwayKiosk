@@ -1,0 +1,9 @@
+# ninja log v5
+20	416	7495510882780536	SubwayKiosk_autogen/timestamp	769652ac06f323c9
+20	416	7495510882780536	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_MSVC2019_64bit-Debug/SubwayKiosk_autogen/timestamp	769652ac06f323c9
+2321	2734	7495510906301680	SubwayKiosk.exe	55fe6c498428b4fd
+20	416	7495510882780536	SubwayKiosk_autogen/mocs_compilation.cpp	769652ac06f323c9
+422	2316	7495510902212254	CMakeFiles/SubwayKiosk.dir/SubwayKiosk_autogen/mocs_compilation.cpp.obj	320557e0843bae61
+20	416	7495510882780536	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_MSVC2019_64bit-Debug/SubwayKiosk_autogen/mocs_compilation.cpp	769652ac06f323c9
+428	2311	7495510902202254	CMakeFiles/SubwayKiosk.dir/main.cpp.obj	154ea51c48dffbc1
+435	2320	7495510902267281	CMakeFiles/SubwayKiosk.dir/subwaykiosk.cpp.obj	49e8bc982648e52
