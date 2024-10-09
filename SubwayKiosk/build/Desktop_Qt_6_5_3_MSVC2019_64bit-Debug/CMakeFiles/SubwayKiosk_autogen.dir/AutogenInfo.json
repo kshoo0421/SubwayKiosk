@@ -268,9 +268,27 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Singleton.h",
+			"MU",
+			"EWIEGA46WW/moc_Singleton.cpp",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/details.h",
+			"MU",
+			"EWIEGA46WW/moc_details.cpp",
+			null
+		],
+		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/enum.h",
 			"MU",
 			"EWIEGA46WW/moc_enum.cpp",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/price.h",
+			"MU",
+			"EWIEGA46WW/moc_price.cpp",
 			null
 		],
 		[
@@ -335,7 +353,17 @@
 	"SOURCES" : 
 	[
 		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/details.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/main.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/price.cpp",
 			"MU",
 			null
 		],
