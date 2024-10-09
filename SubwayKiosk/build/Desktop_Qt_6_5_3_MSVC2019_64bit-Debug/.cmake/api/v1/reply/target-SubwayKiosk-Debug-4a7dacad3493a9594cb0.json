@@ -75,13 +75,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 73,
+				"line" : 74,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 56,
+				"line" : 57,
 				"parent" : 0
 			},
 			{
@@ -379,7 +379,7 @@
 				1,
 				2,
 				8,
-				13
+				12
 			]
 		}
 	],
@@ -499,7 +499,7 @@
 				1,
 				2,
 				8,
-				13
+				12
 			]
 		},
 		{
@@ -513,9 +513,8 @@
 				9,
 				10,
 				11,
-				12,
-				14,
-				15
+				13,
+				14
 			]
 		},
 		{
@@ -523,14 +522,14 @@
 			"sourceIndexes" : 
 			[
 				4,
-				16
+				15
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				17
+				16
 			]
 		}
 	],
@@ -599,11 +598,6 @@
 		{
 			"backtrace" : 4,
 			"path" : "SQLManager.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 4,
-			"path" : "ServerManager.h",
 			"sourceGroupIndex" : 1
 		},
 		{

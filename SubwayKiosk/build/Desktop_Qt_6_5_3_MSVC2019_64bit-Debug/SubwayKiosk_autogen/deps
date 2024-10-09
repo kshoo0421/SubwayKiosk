@@ -350,8 +350,6 @@ SubwayKiosk_autogen/timestamp: \
 	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/DatabaseManager.h \
 	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.cpp \
 	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.h \
-	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.cpp \
-	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.h \
 	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Singleton.h \
 	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_MSVC2019_64bit-Debug/.qtc/package-manager/auto-setup.cmake \
 	C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_MSVC2019_64bit-Debug/CMakeFiles/3.29.3/CMakeCXXCompiler.cmake \
