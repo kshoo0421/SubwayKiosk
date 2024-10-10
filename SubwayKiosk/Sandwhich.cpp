@@ -50,6 +50,12 @@ void Sandwich::SelectSauce(bool s[])
     }
 }
 
+//세트 여부 선택
+void Sandwich::SelectSet(bool b)
+{
+    selection.isSet=b;
+}
+
  //쿠키 선택
 void Sandwich::SelectCookie(Cookie c)
 {
@@ -68,7 +74,7 @@ void Sandwich::SelectChips(Chips c)
     selection.chips=c;
 }
 
-Sandwich::select Sandwich::GetSelected()
+select Sandwich::GetSelected() const
 {
     return selection;
 }

@@ -4,6 +4,10 @@
 
 using namespace std;
 
+
+// Static 변수 초기화(클래스 외부에서 초기화 해야 함)
+QList<SQLManager::Price> SQLManager::priceList;
+
 SQLManager::SQLManager()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
@@ -78,17 +82,28 @@ SQLManager::SQLManager()
     //     }
     // }
 
+    db.close();
+
 }
 
-int SQLManager::GetSandwichPrice(MainSandwich option, bool is15)
+int SQLManager::GetSandwichPrice(MainSandwich option, bool is15, bool isSet)
 {
     int index = static_cast<int>(option);
-    Price p;
-    p= this->priceList.at(index);
+    Price p = priceList.at(index);
     if(is15)
-        return p._15cm;
+    {
+        if(isSet) //15cm 세트
+            return p._15cm+2600;
+        else //15cm 단품
+            return p._15cm;
+    }
     else
-        return p._30cm;
+    {
+        if(isSet) //30cm 세트
+            return p._30cm+2600;
+        else //30cm 단품
+            return p._30cm;
+    }
 }
 SQLManager::Detail SQLManager::GetDetail(MainSandwich option)
 {

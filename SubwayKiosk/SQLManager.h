@@ -20,11 +20,12 @@ private:
             int natrium; //나트륨(mg)
             QString expln; //메뉴 설명
         };
-        QList<Price> priceList; //가격  리스트
+        static QList<Price> priceList; //가격  리스트
         QList<Detail> detailList; //메뉴 상세 정보 리스트
+
         SQLManager();
 public:
-    int GetSandwichPrice(MainSandwich option, bool is15) ; //샌드위치 가격 반환
+    static int GetSandwichPrice(MainSandwich option, bool is15, bool isSet); //샌드위치 가격 반환
     SQLManager::Detail GetDetail(MainSandwich option); //샌드위치 상세 정보 반환
 };
 #endif
