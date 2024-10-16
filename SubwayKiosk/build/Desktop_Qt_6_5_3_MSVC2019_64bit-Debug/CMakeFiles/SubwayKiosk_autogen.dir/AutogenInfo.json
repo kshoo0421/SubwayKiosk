@@ -288,7 +288,8 @@
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginTargets-debug.cmake",
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginTargets-relwithdebinfo.cmake",
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginAdditionalTargetInfo.cmake",
-		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake"
+		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake",
+		"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/image.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk",
 	"CROSS_CONFIG" : false,

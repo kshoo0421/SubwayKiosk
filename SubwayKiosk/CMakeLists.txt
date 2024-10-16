@@ -38,6 +38,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Sandwhich.cpp
         Cart.h
         Cart.cpp
+        image.qrc
+
+
+
 
 
 
