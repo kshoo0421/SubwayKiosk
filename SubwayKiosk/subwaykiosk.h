@@ -17,6 +17,8 @@ public:
     SubwayKiosk(QWidget *parent = nullptr);
     ~SubwayKiosk();
 
+    void setMenuTextStyle(); //메뉴 이름 스타일 설정
+
 private:
     Ui::SubwayKiosk *ui;
 };

@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/titleLogo.png</file>
+        <file>Resources/eggMayo.png</file>
+        <file>Resources/blt.png</file>
+        <file>Resources/ham.png</file>
+        <file>Resources/italianBMT.png</file>
+        <file>Resources/tuna.png</file>
+        <file>Resources/veggie.png</file>
+        <file>Resources/chickenSlice.png</file>
+        <file>Resources/roastedChicken.png</file>
+        <file>Resources/rotisserieBBQ.png</file>
+        <file>Resources/subwayClub.png</file>
+        <file>Resources/chickenBaconAvocado.png</file>
+        <file>Resources/chickenTeriyaki.png</file>
+        <file>Resources/kBBQ.png</file>
+        <file>Resources/pulledPorkBBQ.png</file>
+        <file>Resources/shrimp.png</file>
+        <file>Resources/spicyItalian.png</file>
+        <file>Resources/steak_Cheese.png</file>
+        <file>Resources/beef.png</file>
+        <file>Resources/beef_mushroom.png</file>
+        <file>Resources/spicyShrimp.png</file>
+    </qresource>
+</RCC>

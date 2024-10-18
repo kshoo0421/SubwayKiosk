@@ -36,6 +36,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         json.hpp
         Sandwich.h
         Sandwhich.cpp
+        Cart.h
+        Cart.cpp
+        image.qrc
+
+
+
 
 
 

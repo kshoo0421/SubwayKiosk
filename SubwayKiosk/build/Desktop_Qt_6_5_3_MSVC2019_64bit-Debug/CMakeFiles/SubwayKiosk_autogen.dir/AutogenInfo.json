@@ -288,7 +288,8 @@
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginTargets-debug.cmake",
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginTargets-relwithdebinfo.cmake",
 		"C:/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Sql/Qt6QSQLiteDriverPluginAdditionalTargetInfo.cmake",
-		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake"
+		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake",
+		"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/image.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk",
 	"CROSS_CONFIG" : false,
@@ -296,6 +297,12 @@
 	"DEP_FILE_RULE_NAME" : "SubwayKiosk_autogen/timestamp",
 	"HEADERS" : 
 	[
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Cart.h",
+			"MU",
+			"EWIEGA46WW/moc_Cart.cpp",
+			null
+		],
 		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/DatabaseManager.h",
 			"MU",
@@ -395,6 +402,11 @@
 	"SETTINGS_FILE" : "C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_MSVC2019_64bit-Debug/CMakeFiles/SubwayKiosk_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Cart.cpp",
+			"MU",
+			null
+		],
 		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.cpp",
 			"MU",
