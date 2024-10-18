@@ -7,6 +7,7 @@
 #include <string>
 #include "Singleton.h"
 #include "json.hpp"
+#include "Cart.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -38,10 +39,9 @@ private:
     // json을 string 형식으로 변환
     string JsonToString(const json& j) { return j.dump(); }
 
-    json Tmp2Json(const TMP& tmp); // TMP 구조체를 json 으로 변환
-    TMP Json2Tmp(const json& j);    // json을 tmp 형식으로 변환
 public:
     void SendTMPToServer(const TMP& tmp);
+    void SendCartToServer(const Cart& cart);
     // 장바구니 데이터 보내기
     // 대기번호 데이터 받기
     // 장바구니 데이터 받기
