@@ -1,8 +1,16 @@
 #include "ServerFunction.h"
 using namespace std;
 
+static int server_fd;
+static struct sockaddr_in address;
+static int opt = 1;
+static int addrlen;
+static vector<thread> threads;
+
 /* 1. 서버 데몬화 */
 void Daemonize() {
+    cout << "1. Demonize" << endl;
+
     // 1. 부모 프로세스 종료하여 자식 프로세스를 고아 프로세스로 만듦
     pid_t pid = fork();
     if (pid < 0) {
@@ -40,7 +48,7 @@ void Daemonize() {
     close(STDERR_FILENO);
 
     // 7. 표준 입출력 재설정 (로그용 파일)
-    int fd = open("/tmp/daemon_server.log", O_RDWR | O_CREAT | O_APPEND, 0600);
+    int fd = open("/home/pi/SubwayKiosk/SubwayKiosk/daemon_server.log", O_RDWR | O_CREAT | O_APPEND, 0600);
     if (fd < 0) {
         exit(EXIT_FAILURE);
     }
@@ -50,6 +58,8 @@ void Daemonize() {
 
 /* 2. 소켓 생성 */
 void MakeSocket() {
+    cout << "2. Make Socket" << endl;
+
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         perror("Socket failed");
         exit(EXIT_FAILURE);
@@ -58,6 +68,8 @@ void MakeSocket() {
 
 /* 3. 소켓 옵션 설정 */
 void SetSocketOption() {
+    cout << "3. Set Socket Option" << endl;
+
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
         perror("setsockopt");
         exit(EXIT_FAILURE);
@@ -66,6 +78,8 @@ void SetSocketOption() {
 
 /* 4. 주소 설정 및 바인딩 */
 void BindAddress() {
+    cout << "4. Bind Address" << endl;
+
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(8080);
@@ -78,6 +92,8 @@ void BindAddress() {
 
 /* 5. 클라이언트 대기 상태 설정 */
 void SetWaitingMode() {
+    cout << "5. Set Waiting Mode" << endl;
+
     if (listen(server_fd, 10) < 0) {
         perror("Listen");
         exit(EXIT_FAILURE);
@@ -86,6 +102,7 @@ void SetWaitingMode() {
 
 /* 6. 서버 운영 */
 void ServerService() {
+    cout << "6. Server Service" << endl;
 
     addrlen = sizeof(address);
 
@@ -104,8 +121,10 @@ void ServerService() {
 
 /* 6-(2) 클라이언트 요청 처리 */
 void HandleClient(int clientSocket) {
+    cout << "6-2. Handle Client" << endl;
+
     static int curIdx = 101;
-    string buffer(30000, 0);
+    char buffer[300000];
     read(clientSocket, buffer, 30000);
     cout << "Client request: \n" << buffer << endl;
 
@@ -122,7 +141,7 @@ void HandleClient(int clientSocket) {
 
     // JSON 데이터를 파일에 저장
     string fileName = "kart " + to_string(curIdx) + ".json";
-    ofstream jsonFile("/tmp/" + fileName);
+    ofstream jsonFile("/home/pi/SubwayKiosk/SubwayKiosk/Data/" + fileName);
     if (jsonFile.is_open()) {
         jsonFile << body;
         jsonFile.close();
@@ -132,10 +151,11 @@ void HandleClient(int clientSocket) {
         cerr << "Failed to open file for writing" << endl;
     }
     // JSON 응답 생성
-    string responseBody = R"({
-        "message": "Data received successfully",
-        "status": "OK"
-        "idx" : ")" + curIdx + "}";
+    string responseBody = "({\"message\": \"Data received successfully\"\n\
+        \"status\": \"OK\" \n\
+        \"idx\" : \")\"";
+    responseBody += to_string(curIdx);
+    responseBody += "}";
 
     // HTTP 응답 생성
     ostringstream response;
@@ -153,6 +173,7 @@ void HandleClient(int clientSocket) {
 
 /* 7. 모든 스레드 종료 대기 */
 void WaitForThreadEnd() {
+    cout << "7. Wait For Thread End" << endl;
     for (auto &t : threads) {
         if (t.joinable()) {
             t.join();
