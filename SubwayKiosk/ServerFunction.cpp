@@ -78,7 +78,7 @@ void BindAddress() {
 
 /* 5. 클라이언트 대기 상태 설정 */
 void SetWaitingMode() {
-    if (listen(server_fd, 3) < 0) {
+    if (listen(server_fd, 10) < 0) {
         perror("Listen");
         exit(EXIT_FAILURE);
     }
@@ -86,7 +86,6 @@ void SetWaitingMode() {
 
 /* 6. 서버 운영 */
 void ServerService() {
-    vector<thread> threads;
 
     addrlen = sizeof(address);
 
