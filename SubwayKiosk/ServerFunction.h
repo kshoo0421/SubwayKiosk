@@ -18,6 +18,7 @@ int server_fd;
 struct sockaddr_in address;
 int opt = 1;
 int addrlen;
+vector<thread> threads;
 
 void Daemonize(); // 1. 서버 데몬화
 void MakeSocket(); // 2. 소켓 생성
