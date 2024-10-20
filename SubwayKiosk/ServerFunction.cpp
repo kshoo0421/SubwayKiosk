@@ -111,7 +111,7 @@ void ServerService() {
 /* 6-(2) 클라이언트 요청 처리 */
 void HandleClient(int clientSocket) {
     static int curIdx = 101;
-    string buffer(30000, 0);
+    char buffer[3000];
     read(clientSocket, buffer, 30000);
     cout << "Client request: \n" << buffer << endl;
 
@@ -138,10 +138,10 @@ void HandleClient(int clientSocket) {
         cerr << "Failed to open file for writing" << endl;
     }
     // JSON 응답 생성
-    string responseBody = R"({
-        "message": "Data received successfully",
-        "status": "OK"
-        "idx" : ")" + curIdx + "}";
+    string responseBody = "{message: Data received successfully\n\
+        status: OK\nidx: "; 
+    responseBody += curIdx;
+    responseBody += "}";
 
     // HTTP 응답 생성
     ostringstream response;
