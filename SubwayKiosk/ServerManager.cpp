@@ -10,7 +10,13 @@ ServerManager::ServerManager() {
         exit(1);
     }
 #endif
-     ConnectToServer(); // 서버 연결
+
+    /*====== 여길 수정하시면 됩니다 ==========*/
+
+    // ConnectToServer(); // 서버 연결
+
+    /*===================================*/
+
 }
 
 ServerManager::~ServerManager() {
@@ -65,20 +71,32 @@ void ServerManager::SendJsonToServer(const json& j) {
     qDebug() << "JSON data sent to server";
 }
 
-char* ServerManager::ReceiveDataFromServer() {
-    char buffer[BUFFER_SIZE] = "1\n\0"; // 수신용 버퍼
-    /*
-
-    // 서버 응답 수신
-    int valRead = read(sock, &buffer[0], BUFFER_SIZE);
+string ServerManager::ReceiveDataFromServer() {
+    buffer.assign(BUFFER_SIZE, ' ');
+    int valRead = recv(sock, &buffer[0], BUFFER_SIZE, 0);  // Windows에서는 recv() 사용
     if (valRead > 0) {
-        cout << "Server response: \n" << buffer << endl;
-    } 
-    else {
-        cerr << "Failed to receive response from server" << endl;
+        // 버퍼를 문자열로 변환 후 출력
+        string response(buffer.begin(), buffer.begin() + valRead);
+        cout << "Server response:\n" << response << endl;
+        return response;  // 문자열을 반환
     }
-    */
-    return buffer;
+    else if (valRead == 0) {
+        cout << "Connection closed by server." << endl;
+    }
+    else {
+        cerr << "Failed to receive response from server. Error code: " << WSAGetLastError() << endl;
+    }
+    return "";  // 오류 시 빈 문자열 반환
+}
+
+json ServerManager::StringToJson(const string& s) {
+    try {
+        json jsonObject = json::parse(s);
+        return jsonObject;
+    } catch (const json::parse_error& e) {
+        qDebug() << "JSON 파싱 오류";
+        return json{{"error", "Parsing Error"}};
+    }
 }
 
 // Cart->json nlohmann/json 오버라이드 
@@ -119,7 +137,7 @@ void to_json(json& j, const Sandwich& sandwich) {
 
 // from_json 함수도 정의할 수 있음 (JSON -> Person 변환)
 void from_json(const json& j, Sandwich& sandwich) {
-    struct select selection = sandwich.GetSelected();
+    struct select& selection = sandwich.selection;
 
     short bitTopping = 0;
     short bitVegetable = 0;
@@ -156,10 +174,12 @@ void ServerManager::SendCartToServer(const Cart& cart) {
     json jCookie = cart.GetCookies();
     json jDrinks = cart.GetDrinks();
     json jTotal = json{{"Type", "Cart"},
-            {"Main Sandwich", jSandwich},
+            {"Sandwiches", jSandwich},
             {"Chips", jChips},
             {"Cookies", jCookie},
-            {"Drink", jDrinks}
+            {"Drinks", jDrinks},
+            {"Total Count", cart.totalCnt},
+            {"Total Price", cart.totalPrice}
         };
     SendJsonToServer(jTotal);
 }
@@ -172,10 +192,22 @@ string ServerManager::CartToJsonString(const Cart& cart) {
     json jCookie = cart.GetCookies();
     json jDrinks = cart.GetDrinks();
     json jTotal = json{{"Type", "Cart"},
-        {"Main Sandwich", jSandwich},
+        {"Sandwiches", jSandwich},
         {"Chips", jChips},
         {"Cookies", jCookie},
-        {"Drink", jDrinks}
+        {"Drinks", jDrinks},
+        {"Total Count", cart.totalCnt},
+        {"Total Price", cart.totalPrice}
     };
     return JsonToString(jTotal);
+}
+
+void ServerManager::StringToCart(Cart& cart, const string& sJson) {
+    json j = StringToJson(sJson);
+    j.at("Sandwiches").get_to(cart.sandwich);
+    j.at("Chips").get_to(cart.chips);
+    j.at("Cookies").get_to(cart.cookie);
+    j.at("Drinks").get_to(cart.drinks);
+    j.at("Total Count").get_to(cart.totalCnt);
+    j.at("Total Price").get_to(cart.totalPrice);
 }
