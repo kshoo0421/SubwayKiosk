@@ -10,7 +10,7 @@ ServerManager::ServerManager() {
         exit(1);
     }
 #endif
-    // ConnectToServer(); // 서버 연결
+     ConnectToServer(); // 서버 연결
 }
 
 ServerManager::~ServerManager() {

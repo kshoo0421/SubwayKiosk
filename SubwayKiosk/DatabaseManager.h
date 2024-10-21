@@ -8,9 +8,9 @@ class DatabaseManager : public Singleton<DatabaseManager> {
     friend class Singleton<DatabaseManager>;
 private:
     DatabaseManager();
-    ServerManager& serverManager;   
-    SQLManager& sqlManager;
-public:
 
+public:
+    ServerManager& serverManager;
+    SQLManager& sqlManager;
 };
 #endif
