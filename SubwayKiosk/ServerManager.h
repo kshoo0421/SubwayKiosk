@@ -1,10 +1,22 @@
 #ifndef SERVER_MANGER_H
 #define SERVER_MANGER_H
 
-#define SERVER_ADDR "127.0.0.1"
+#define SERVER_ADDR "192.168.0.113"
+#define SERVER_PORT 8080
 #define BUFFER_SIZE 3000
 
 #include <string>
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <QDebug>
+
+#ifdef _WIN32
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "Ws2_32.lib")  // 링크 추가
+#endif
+
 #include "Singleton.h"
 #include "json.hpp"
 #include "Cart.h"
@@ -15,7 +27,8 @@ using json = nlohmann::json;
 class ServerManager : public Singleton<ServerManager> {
     friend class Singleton<ServerManager>;
 private:
-    int sock = 0;
+    WSADATA wsaData;
+    SOCKET sock = INVALID_SOCKET;
     struct sockaddr_in servAddr;
 
     ServerManager();
@@ -32,6 +45,7 @@ private:
 
 public:
     void SendCartToServer(const Cart& cart);
+    string CartToJsonString(const Cart& cart);
     // 장바구니 데이터 보내기
     // 대기번호 데이터 받기
     // 장바구니 데이터 받기
