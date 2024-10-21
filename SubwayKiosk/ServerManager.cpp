@@ -164,6 +164,7 @@ void ServerManager::SendCartToServer(const Cart& cart) {
     SendJsonToServer(jTotal);
 }
 
+
 string ServerManager::CartToJsonString(const Cart& cart) {
     qDebug() << "CartToJsonString";
     json jSandwich = cart.GetSandwiches();
