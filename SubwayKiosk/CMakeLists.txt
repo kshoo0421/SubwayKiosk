@@ -41,6 +41,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         image.qrc
         ManageFrame.h
         ManageFrame.cpp
+        ServerManager.h
+        ServerManager.cpp
 
 
 

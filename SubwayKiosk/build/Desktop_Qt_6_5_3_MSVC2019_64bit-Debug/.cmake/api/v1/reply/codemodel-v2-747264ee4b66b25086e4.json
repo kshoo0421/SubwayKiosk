@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-abff2c74752c91258082.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "SubwayKiosk",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "SubwayKiosk::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SubwayKiosk-Debug-ee442d954de98a703b79.json",
+					"name" : "SubwayKiosk",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SubwayKiosk_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SubwayKiosk_autogen-Debug-6469de1eb6bedfc59fa5.json",
+					"name" : "SubwayKiosk_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SubwayKiosk_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SubwayKiosk_autogen_timestamp_deps-Debug-18b6acc63f4053ddf9c5.json",
+					"name" : "SubwayKiosk_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_MSVC2019_64bit-Debug",
+		"source" : "C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

@@ -328,6 +328,12 @@
 			null
 		],
 		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.h",
+			"MU",
+			"EWIEGA46WW/moc_ServerManager.cpp",
+			null
+		],
+		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Singleton.h",
 			"MU",
 			"EWIEGA46WW/moc_Singleton.cpp",
@@ -425,6 +431,11 @@
 		],
 		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Sandwhich.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.cpp",
 			"MU",
 			null
 		],
