@@ -310,6 +310,12 @@
 			null
 		],
 		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ManageFrame.h",
+			"MU",
+			"EWIEGA46WW/moc_ManageFrame.cpp",
+			null
+		],
+		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.h",
 			"MU",
 			"EWIEGA46WW/moc_SQLManager.cpp",
@@ -404,6 +410,11 @@
 	[
 		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Cart.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ManageFrame.cpp",
 			"MU",
 			null
 		],

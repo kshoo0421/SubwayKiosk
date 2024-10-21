@@ -75,13 +75,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 85,
+				"line" : 86,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 68,
+				"line" : 69,
 				"parent" : 0
 			},
 			{
@@ -381,7 +381,7 @@
 				9,
 				12,
 				14,
-				18
+				19
 			]
 		}
 	],
@@ -503,7 +503,7 @@
 				9,
 				12,
 				14,
-				18
+				19
 			]
 		},
 		{
@@ -518,7 +518,8 @@
 				10,
 				11,
 				13,
-				16
+				16,
+				17
 			]
 		},
 		{
@@ -527,15 +528,15 @@
 			[
 				4,
 				15,
-				17
+				18
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				19,
-				20
+				20,
+				21
 			]
 		}
 	],
@@ -627,6 +628,11 @@
 			"backtrace" : 4,
 			"path" : "image.qrc",
 			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 4,
+			"path" : "ManageFrame.h",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 0,

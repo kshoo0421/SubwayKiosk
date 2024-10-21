@@ -43,12 +43,13 @@ SQLManager::SQLManager()
     if (query.exec("SELECT * FROM Detail")) {// 쿼리 결과를 QList에 저장
         while (query.next()) {
             Detail info;
-            info.kcal = query.value(0).toInt();  // 첫 번째 칼럼: 열량
-            info.protein = query.value(1).toFloat();  // 두 번째 칼럼: 단백질
-            info.saturatedFatty=query.value(2).toFloat(); // 세 번째 칼럼: 포화 지방
-            info.sugar=query.value(3).toFloat(); // 네 번째 칼럼: 당류
-            info.natrium = query.value(4).toInt(); // 다섯 번째 칼럼: 나트륨
-            info.expln = query.value(5).toString(); // 여섯 번째 칼럼: 상세 설명
+            info.name = query.value(0).toString(); // 첫 번째 칼럼 : 이름
+            info.kcal = query.value(1).toInt();  // 두 번째 칼럼: 열량
+            info.protein = query.value(2).toFloat();  // 세 번째 칼럼: 단백질
+            info.saturatedFatty=query.value(3).toFloat(); // 네 번째 칼럼: 포화 지방
+            info.sugar=query.value(4).toFloat(); // 다섯 번째 칼럼: 당류
+            info.natrium = query.value(5).toInt(); // 여섯 번째 칼럼: 나트륨
+            info.expln = query.value(6).toString(); // 일곱 번째 칼럼: 상세 설명
             detailList.append(info);  // 리스트에 추가
         }
     } else {
@@ -68,16 +69,16 @@ SQLManager::SQLManager()
     //     }
     // }
 
-    // if (!this->query.exec("SELECT * FROM Detail")) {
-    //     qDebug() << "Details query execution failed: " << this->query.lastError().text();
+    // if (query.exec("SELECT * FROM Detail")) {
+    //     qDebug() << "Details query execution failed: " << query.lastError().text();
     // } else {
-    //     while (this->query.next()) {
-    //         int kcal = this->query.value(0).toInt();
-    //         float protein = this->query.value(1).toFloat();
-    //         float satFat = this->query.value(2).toFloat();
-    //         float sugar = this->query.value(3).toFloat();
-    //         int nat = this->query.value(4).toInt();
-    //         QString expln = this->query.value(5).toString();
+    //     while (query.next()) {
+    //         int kcal = query.value(0).toInt();
+    //         float protein = query.value(1).toFloat();
+    //         float satFat = query.value(2).toFloat();
+    //         float sugar =query.value(3).toFloat();
+    //         int nat = query.value(4).toInt();
+    //         QString expln = query.value(5).toString();
     //         qDebug()<<"열량 : "<<kcal<<"kcal, 단백질 = "<<protein<<"g, 포화지방 : "<<satFat<<", 당류 : "<<sugar<<", 상세 설명 : "<<expln;
     //     }
     // }

@@ -21,5 +21,18 @@
         <file>Resources/beef.png</file>
         <file>Resources/beef_mushroom.png</file>
         <file>Resources/spicyShrimp.png</file>
+        <file>Resources/chocolateChip.jpg</file>
+        <file>Resources/doubleChocolateChip.jpg</file>
+        <file>Resources/oatmealRasin.jpg</file>
+        <file>Resources/raspberryCheeseCake.jpg</file>
+        <file>Resources/whiteChocoMacadamia.jpg</file>
+        <file>Resources/nacho.jpeg</file>
+        <file>Resources/ohgam.jpeg</file>
+        <file>Resources/poka.png</file>
+        <file>Resources/swing.png</file>
+        <file>Resources/coke.png</file>
+        <file>Resources/fanta.png</file>
+        <file>Resources/sprite.png</file>
+        <file>Resources/cart.png</file>
     </qresource>
 </RCC>
