@@ -11,6 +11,7 @@
 #include "SQLManager.h"
 #include "ManageFrame.h"
 #include <QPixmap>
+#include <QTableWidget>
 
 SubwayKiosk::SubwayKiosk(QWidget *parent)
     : QMainWindow(parent)
@@ -24,7 +25,7 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
     };
 
     // 스타일 기본 설정
-    applyBtnStyle( 4, 0); // 초기 설정 (-1 : 선택된 버튼 없음)
+    applyBtnStyle(4, 0); // 초기 설정 (-1 : 선택된 버튼 없음)
     setMenuTextStyle(); // 메뉴 텍스트 스타일 설정
 
     // 카트 이미지 넣음
@@ -46,7 +47,15 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
     QVBoxLayout *modalLayout = new QVBoxLayout(modal); //모달 담을 레이아웃
     modal->setFixedSize(QSize(400,400));
 
-    SQLManager *sql =  SQLManager::getInstance();
+    SQLManager *sql =  SQLManager::getInstance(); //sql 저장 정보 가져오기
+
+    //성분표
+    QTableWidget *table = new QTableWidget;
+    for(int i = 0;i<5;i++)
+        table->insertColumn(i);
+    QStringList header;
+    header<<"열량(kcal)"<<"단백질(g)"<<"포화지방(g)"<<"당류(g)"<<"나트륨(mg)";
+    table->setHorizontalHeaderLabels(header);
 
     // 클릭한 프레임에 해당하는 enum을 사용해 SQL에서 정보를 가져와서 출력
     for (int i = 0; i < 5; ++i) {
@@ -65,9 +74,12 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
             imageLabel->setPixmap(image.scaled(200, 200, Qt::KeepAspectRatio)); // 이미지 크기 조정 (원하는 크기로 설정)
 
             QLabel *title = new QLabel(sql->GetDetail(sandwichType).name); // 샌드위치 이름
+            table->insertRow(1);
+            int kcal = sql->GetDetail(sandwichType).kcal;
+
             QLabel *expln = new QLabel(sql->GetDetail(sandwichType).expln); // 상세 설명
 
-            title->setAlignment(Qt::AlignCenter); // 가운데 정렬
+            title->setAlignment(Qt::AlignCenter); // 이름 가운데 정렬
             title->setStyleSheet("font : bold; font-size: 16px;");
             imageLabel->setAlignment(Qt::AlignCenter);
             expln->setAlignment(Qt::AlignCenter);
@@ -77,6 +89,7 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
 
              modalLayout->addWidget(imageLabel); //모달에 이미지 추가
             modalLayout->addWidget(title); // 모달에 샌드위치 이름 추가
+             modalLayout->addWidget(table);
             modalLayout->addWidget(expln); // 모달에 상세 설명 추가
 
             modal->exec(); // 모달 실행
