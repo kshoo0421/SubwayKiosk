@@ -2,6 +2,10 @@
 #define SUBWAYKIOSK_H
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QLabel>
+#include <QMdiArea>
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,6 +22,8 @@ public:
     ~SubwayKiosk();
 
     void setMenuTextStyle(); //메뉴 이름 스타일 설정
+    void applyBtnStyle( int size, int selectedIdx);
+    void applyLabelStyle(QLabel *labels[], int size);
 
 private:
     Ui::SubwayKiosk *ui;
