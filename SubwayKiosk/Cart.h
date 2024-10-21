@@ -9,6 +9,16 @@ using namespace std;
 class Cart {
 private:
 
+    // vector<Sandwich> sandwich; // 샌드위치 저장
+    // vector<Chips> chips; //칩 저장
+    // vector<Cookie> cookie; //쿠키 저장
+    // vector<Drink> drinks; //음료 저장
+    // int totalCnt;
+    // int totalPrice; // 총 가격
+
+public:
+    Cart();
+
     vector<Sandwich> sandwich; // 샌드위치 저장
     vector<Chips> chips; //칩 저장
     vector<Cookie> cookie; //쿠키 저장
@@ -16,8 +26,6 @@ private:
     int totalCnt;
     int totalPrice; // 총 가격
 
-public:
-    Cart();
     /* 항목 추가 */
     void Add(const Sandwich& sandwich); // 샌드위치 추가
     void Add(const Chips& chip); //칩 추가

@@ -310,6 +310,12 @@
 			null
 		],
 		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ManageFrame.h",
+			"MU",
+			"EWIEGA46WW/moc_ManageFrame.cpp",
+			null
+		],
+		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.h",
 			"MU",
 			"EWIEGA46WW/moc_SQLManager.cpp",
@@ -319,6 +325,12 @@
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Sandwich.h",
 			"MU",
 			"EWIEGA46WW/moc_Sandwich.cpp",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.h",
+			"MU",
+			"EWIEGA46WW/moc_ServerManager.cpp",
 			null
 		],
 		[
@@ -408,12 +420,22 @@
 			null
 		],
 		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ManageFrame.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/SQLManager.cpp",
 			"MU",
 			null
 		],
 		[
 			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/Sandwhich.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ServerManager.cpp",
 			"MU",
 			null
 		],

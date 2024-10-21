@@ -20,10 +20,10 @@ struct select{
 
 class Sandwich{
 private:
-    select selection; //선택 정보 저장
+  //  struct select selection; //선택 정보 저장
 
 public:
-
+ struct select selection; //선택 정보 저장
     /* 선택 */
     void SelectMenu(MainSandwich m); //메뉴명 선택
     void SelectSize(bool b); //길이 선택(15cm or 30cm)
@@ -38,7 +38,7 @@ public:
     void SelectChips(Chips c); //칩 선택
 
     /* 선택 정보 */
-    select GetSelected() const;
+    struct select GetSelected() const;
 };
 
 #endif // SANDWICH_H

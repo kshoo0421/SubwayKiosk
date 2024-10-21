@@ -13,6 +13,7 @@ private:
            int _30cm;
        };
         struct Detail{
+            QString name; //샌드위치 한글명
             int kcal; //열량
             float protein; //단백질(g)
             float saturatedFatty; //포화지방(g)
@@ -24,7 +25,13 @@ private:
         QList<Detail> detailList; //메뉴 상세 정보 리스트
 
         SQLManager();
+
 public:
+        static SQLManager* getInstance() {
+            static SQLManager instance;
+            return &instance;
+        }
+
     static int GetSandwichPrice(MainSandwich option, bool is15, bool isSet); //샌드위치 가격 반환
     SQLManager::Detail GetDetail(MainSandwich option); //샌드위치 상세 정보 반환
 };

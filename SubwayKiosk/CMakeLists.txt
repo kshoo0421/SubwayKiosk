@@ -39,6 +39,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Cart.h
         Cart.cpp
         image.qrc
+        ManageFrame.h
+        ManageFrame.cpp
+        ServerManager.h
+        ServerManager.cpp
 
 
 

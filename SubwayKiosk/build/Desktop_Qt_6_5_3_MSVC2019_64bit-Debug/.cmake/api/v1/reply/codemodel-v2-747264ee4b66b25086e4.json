@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-2f302f0123fdba0757ba.json",
+					"jsonFile" : "directory-.-Debug-abff2c74752c91258082.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "SubwayKiosk::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SubwayKiosk-Debug-64e3610d805bdf328883.json",
+					"jsonFile" : "target-SubwayKiosk-Debug-ee442d954de98a703b79.json",
 					"name" : "SubwayKiosk",
 					"projectIndex" : 0
 				},
