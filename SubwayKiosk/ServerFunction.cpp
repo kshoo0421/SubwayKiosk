@@ -92,7 +92,7 @@ void SetWaitingMode() {
 
 /* 6. 서버 운영 */
 void ServerService() {
-
+    cout << "서버 운영 시작" << endl;
     addrlen = sizeof(address);
 
     while (true) {
@@ -102,6 +102,7 @@ void ServerService() {
             perror("Accept");
             exit(EXIT_FAILURE);
         }
+        cout << "수락 완료" << endl;
 
         // 6-(2) 새 스레드에서 클라이언트 요청 처리
         threads.emplace_back(thread(HandleClient, new_socket));
@@ -127,12 +128,12 @@ void HandleClient(int clientSocket) {
     cout << "Received JSON data: " << body << endl;
 
     // JSON 데이터를 파일에 저장
-    string fileName = "kart " + to_string(curIdx) + ".json";
-    ofstream jsonFile("/tmp/" + fileName);
+    string fileName = "cart " + to_string(curIdx) + ".json";
+    ofstream jsonFile("/home/pi/SubwayKiosk/Data/" + fileName);
     if (jsonFile.is_open()) {
         jsonFile << body;
         jsonFile.close();
-        cout << "JSON data saved to /tmp/" << fileName << endl;
+        cout << "JSON data saved to /home/pi/SubwayKiosk/Data/" << fileName << endl;
     } 
     else {
         cerr << "Failed to open file for writing" << endl;

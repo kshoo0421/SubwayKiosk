@@ -1,7 +1,7 @@
 #include "ServerFunction.h"
 
 int main() {
-    Daemonize();        // 1. 서버 데몬화
+    // Daemonize();        // 1. 서버 데몬화
     MakeSocket();       // 2. 소켓 생성
     SetSocketOption();  // 3. 소켓 옵션 설정
     BindAddress();      // 4. 주소 설정 및 바인딩
