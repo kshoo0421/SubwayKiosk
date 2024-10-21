@@ -20,7 +20,7 @@ void ServerManager::ConnectToServer() {
     // 1. 소켓 생성
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         cerr << "Socket creation error" << endl;
-        return -1;
+        exit(1);
     }
 
     servAddr.sin_family = AF_INET;
@@ -29,31 +29,32 @@ void ServerManager::ConnectToServer() {
     // 2. 서버 주소 설정
     if (inet_pton(AF_INET, SERVER_ADDR, &servAddr.sin_addr) <= 0) {
         cerr << "Invalid address/ Address not supported" << endl;
-        return -1;
+        exit(1);
     }
 
     // 3. 서버 연결
     if (connect(sock, (struct sockaddr *)&servAddr, sizeof(servAddr)) < 0) {
         cerr << "Connection Failed" << endl;
-        return -1;
+        exit(1);
     }
-    return 0;
 }
 
 void ServerManager::SendJsonToServer(const json& j) {
     string json_data = JsonToString(j); // string으로 변환
-    string request = "POST / HTTP/1.1\r\n" +
-            "Host: 127.0.0.1:8080\r\n" +
-            "Content-Type: application/json\r\n" + 
-            "Content-Length: " + to_string(json_data.length()) + "\r\n" + 
-            "\r\n" + json_data;
+    string request = "POST / HTTP/1.1\r\n\
+            Host: 127.0.0.1:8080\r\n\
+            Content-Type: application/json\r\n\ 
+            Content-Length: " + to_string(json_data.length()) 
+            + "\r\n\r\n" + json_data;
 
     // 5. 서버에 요청 전송
     send(sock, request.c_str(), request.length(), 0);
     cout << "JSON data sent to server" << endl;
 }
 
-string ServerManager::ReceiveDataFromServer() {
+char* ServerManager::ReceiveDataFromServer() {
+    char buffer[BUFFER_SIZE]; // 수신용 버퍼
+
     // 서버 응답 수신
     int valRead = read(sock, &buffer[0], BUFFER_SIZE);
     if (valRead > 0) {
@@ -62,23 +63,88 @@ string ServerManager::ReceiveDataFromServer() {
     else {
         cerr << "Failed to receive response from server" << endl;
     }
-    return buffer.substr(0, valRead);
+    return buffer;
 }
 
+// Cart->json nlohmann/json 오버라이드 
+void to_json(json& j, const Sandwich& sandwich) {
+    struct select selection = sandwich.GetSelected();
 
-json ServerManager::Tmp2Json(const TMP& tmp) {
-    return json{{"i1", tmp.i1}, {"i2", tmp.i2}, {"b1", tmp.b1}, {"f1", tmp.f1}};
+    short bitTopping = 0;
+    short bitVegetable = 0;
+    short bitSauce = 0;
+    
+    for(int i = 0; i < 14; i++) { // 비트마스킹
+        if(i < 7 && selection.topping[i]) {
+            bitTopping |= (1 << i);  // i번째 비트를 1로 설정
+        }
+        
+        if(i < 8 && selection.vegetable[i]) {
+                bitVegetable |= (1 << i);  // i번째 비트를 1로 설정
+        }
+
+        if (selection.sauce[i]) {
+            bitSauce |= (1 << i);  // i번째 비트를 1로 설정
+        }
+    }
+
+    j = json{{"Main Sandwich", selection.menu},
+        {"Is 15cm?", selection.is15}, 
+        {"Bread", selection.bread},
+        {"Topping", bitTopping},
+        {"Cheese", selection.cheese},
+        {"Vegetable", bitVegetable},
+        {"Sauce", bitSauce},
+        {"Is Set", selection.isSet},
+        {"Cookie", selection.cookie},
+        {"Drink", selection.drink},
+        {"Chips", selection.chips}
+     };
 }
 
-TMP ServerManager::Json2Tmp(const json& j) {
-    TMP tmp;
-    j.at("i1").get_to(tmp.i1);
-    j.at("i2").get_to(tmp.i2);
-    j.at("f1").get_to(tmp.f1);
-    j.at("b1").get_to(tmp.b1);
-    return tmp;
+// from_json 함수도 정의할 수 있음 (JSON -> Person 변환)
+void from_json(const json& j, Sandwich& sandwich) {
+    struct select selection = sandwich.GetSelected();
+
+    short bitTopping = 0;
+    short bitVegetable = 0;
+    short bitSauce = 0;
+
+    j.at("Main Sandwich").get_to(selection.menu);
+    j.at("Is 15cm?").get_to(selection.is15);
+    j.at("Bread").get_to(selection.bread);
+    j.at("Topping").get_to(bitTopping);
+    j.at("Cheese").get_to(selection.cheese);
+    j.at("Vegetable").get_to(bitVegetable);
+    j.at("Sauce").get_to(bitSauce);
+    j.at("Is Set").get_to(selection.isSet);
+    j.at("Cookie").get_to(selection.cookie);
+    j.at("Drink").get_to(selection.drink);
+    j.at("Chips").get_to(selection.chips);
+
+    for(int i = 0; i < 14; i++) { // 비트마스킹
+        if(i < 7) {
+            selection.topping[i] = ((bitTopping & (1 << i)) != 0);
+        }
+        
+        if(i < 8) {
+            selection.vegetable[i] = ((bitVegetable & (1 << i)) != 0);
+        }
+        
+        selection.sauce[i] = ((bitSauce & (1 << i)) != 0); 
+    }
 }
 
-void ServerManager::SendTMPToServer(const TMP& tmp) {
-    SendJsonToServer(Tmp2Json(tmp));
+void ServerManager::SendCartToServer(const Cart& cart) {
+    json jSandwich = cart.GetSandwiches();
+    json jChips = cart.GetChips();
+    json jCookie = cart.GetCookies();
+    json jDrinks = cart.GetDrinks();
+    json jTotal = json{{"Type", "Cart"},
+            {"Main Sandwich", jSandwich},
+            {"Chips", jChips},
+            {"Cookies", jCookie},
+            {"Drink", jDrinks}
+        };
+    SendJsonToServer(jTotal);
 }
