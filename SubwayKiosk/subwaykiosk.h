@@ -21,6 +21,8 @@ public:
     SubwayKiosk(QWidget *parent = nullptr);
     ~SubwayKiosk();
 
+    void SihooTest();
+
     void setMenuTextStyle(); //메뉴 이름 스타일 설정
     void applyBtnStyle( int size, int selectedIdx);
     void applyLabelStyle(QLabel *labels[], int size);
