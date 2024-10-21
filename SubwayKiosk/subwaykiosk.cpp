@@ -14,14 +14,17 @@
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QButtonGroup>
-
-
+#include <QRadioButton>
+#include "ServerManager.h"
+#include "DatabaseManager.h"
 
 SubwayKiosk::SubwayKiosk(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::SubwayKiosk)
 {
     ui->setupUi(this);
+
+
 
     /* 버튼 카테고리 */
     QPushButton *btnCategories[] = {
@@ -47,8 +50,8 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
         ui->frameEggMayo, ui->frameHam, ui->frameTuna, ui->frameBLT, ui->frameBMT,
     };
     /* 메뉴 선택 시 연결 창 */
-    QDialog *modal = new QDialog(this);
-    QVBoxLayout *modalLayout = new QVBoxLayout(modal); //모달 담을 레이아웃
+
+
     modal->setFixedSize(QSize(600,400));
 
     SQLManager *sql =  SQLManager::getInstance(); //sql 저장 정보 가져오기
@@ -85,8 +88,8 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
             for(int j = 0; j < 5; j++)
             {
                 QTableWidgetItem* item = new QTableWidgetItem(content[j]);
-                  item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-                  table->setItem(0,j, item);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                table->setItem(0,j, item);
             }
 
             table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); //가로 너비에 맞추기
@@ -102,29 +105,32 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
 
             imageLabel->setAlignment(Qt::AlignCenter); //이미지 가운데 정렬
 
-          //  expln->setWordWrap(true); //자동 줄 바꿈
-           // expln->setMaximumWidth(350); // 최대 너비 설정
+            //  expln->setWordWrap(true); //자동 줄 바꿈
+            // expln->setMaximumWidth(350); // 최대 너비 설정
 
             QPushButton *btnCancel = new QPushButton; //취소 버튼
             btnCancel->setText("취소하기");
             btnCancel->setStyleSheet("font : bold;");
             btnCancel->setFixedSize(QSize(100,35));
+            connect(btnCancel,SIGNAL(clicked()),this,SLOT(closeModal())); //모달 종료
 
             QPushButton *btnOrder = new QPushButton; //주문 버튼
             btnOrder->setText("주문하기");
             btnOrder->setStyleSheet("background-color : green; color : white; font:bold;");
             btnOrder->setFixedSize(QSize(100,35));
+            connect(btnOrder,SIGNAL(clicked()),this, SLOT(selectOrder()));
+            // connect(btnOrder,SIGNAL(clicked()), this, SLOT(SihooTest()));
 
             // 버튼 가로 배치할 레이아웃
             QHBoxLayout *layout = new QHBoxLayout;
             layout->addWidget(btnCancel);  // 취소 버튼 추가
             layout->addWidget(btnOrder);  // 주문 버튼 추가
 
-             modalLayout->addWidget(imageLabel); //모달에 이미지 추가
-             modalLayout->addWidget(title); // 모달에 샌드위치 이름 추가
-             modalLayout->addWidget(table); //성분표 추가
-             modalLayout->addWidget(info); //"상세설명" 타이틀 추가
-             modalLayout->addWidget(expln); // 모달에 상세 설명 추가
+            modalLayout->addWidget(imageLabel); //모달에 이미지 추가
+            modalLayout->addWidget(title); // 모달에 샌드위치 이름 추가
+            modalLayout->addWidget(table); //성분표 추가
+            modalLayout->addWidget(info); //"상세설명" 타이틀 추가
+            modalLayout->addWidget(expln); // 모달에 상세 설명 추가
             modalLayout->addLayout(layout); // 버튼 레이아웃 추가
 
             modal->exec(); // 모달 실행
@@ -196,11 +202,90 @@ void SubwayKiosk::setMenuTextStyle()
 }
 
 
-#include "ServerManager.h"
+void SubwayKiosk::closeModal() //모달 종료(취소 버튼)
+{
+    modal->close();
+}
+
+void SubwayKiosk::selectOrder() //재료 선택(주문 버튼)
+{
+    modal->close();
+    //위젯 추가해서 위에 쌓기
+
+    QStackedWidget *orderWidget = new QStackedWidget;
+
+    QWidget* sizeWidget = selectSize(); //사이즈 선택 위젯 생성
+
+
+    orderWidget->addWidget(sizeWidget);
+
+    // 주문 모달 생성
+    QDialog *orderModal = new QDialog;
+    orderModal->setFixedSize(QSize(500,400));
+    orderModal->setStyleSheet("background-color : white;");
+    orderModal->setLayout(new QVBoxLayout); // 새로운 레이아웃 설정 (모달이 이미 열려있어야 함)
+    orderModal->layout()->addWidget(orderWidget);
+    orderModal->show();
+
+}
+
+QWidget* SubwayKiosk::selectSize()
+{
+    /* 사이즈 선택 */
+    QWidget *sizeWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(sizeWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+
+    QLabel* title = new QLabel("사이즈 선택");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+    // title->setAlignment(Qt::AlignTop);
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+
+    QRadioButton *option[2];
+    option[0] = new QRadioButton("15cm", this);
+    option[1] = new QRadioButton("30cm", this);
+    option[0]->setStyleSheet("font-size : 20px;");
+    option[1]->setStyleSheet("font-size : 20px;");
+
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    btnGroup->addButton(option[0]);
+    btnGroup->addButton(option[1]);
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    sizeLayout->addWidget(option[0]);
+    sizeLayout->addWidget(option[1]);
+    sizeLayout->addLayout(layout);
+
+    // 버튼 가운데 정렬
+    sizeLayout->setAlignment(option[0], Qt::AlignCenter);
+    sizeLayout->setAlignment(option[1], Qt::AlignCenter);
+
+    return sizeWidget;
+}
+
+//#include "ServerManager.h"
 #include "enum.h"
 
 void SubwayKiosk::SihooTest() {
-    ServerManager& serverManager = ServerManager::Instance();
+    DatabaseManager& dataManager = DatabaseManager::Instance();
+    //ServerManager& serverManager = ServerManager::Instance();
 
     Cart testCart = Cart();
 
@@ -227,5 +312,6 @@ void SubwayKiosk::SihooTest() {
     testCart.drinks.emplace_back(Drink::Cider);
     testCart.cookie.emplace_back(Cookie::ChocoChip);
 
-    qDebug() << serverManager.CartToJsonString(testCart);
+    qDebug() << dataManager.serverManager.CartToJsonString(testCart);
+    dataManager.serverManager.SendCartToServer(testCart);
 }

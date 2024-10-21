@@ -136,15 +136,22 @@ C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_M
   C:/Qt/6.5.3/msvc2019_64/include/QtGui/qtransform.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/QDialog \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/QFrame \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/QLabel \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/QMainWindow \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/QMdiArea \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/QPushButton \
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qabstractbutton.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qabstractscrollarea.h \
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qboxlayout.h \
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qdialog.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qframe.h \
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qgridlayout.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qlabel.h \
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qlayout.h \
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qlayoutitem.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qmainwindow.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qmdiarea.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qpushbutton.h \
@@ -153,4 +160,5 @@ C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/build/Desktop_Qt_6_5_3_M
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qtwidgets-config.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qtwidgetsexports.h \
   C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qtwidgetsglobal.h \
-  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qwidget.h
+  C:/Qt/6.5.3/msvc2019_64/include/QtWidgets/qwidget.h \
+  C:/Users/qldkr/Documents/GitHub/SubwayKiosk/SubwayKiosk/ManageFrame.h
