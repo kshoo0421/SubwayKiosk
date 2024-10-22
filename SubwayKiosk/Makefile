@@ -1,16 +1,16 @@
 CC = g++
-CFLAGS = -g
+CFLAGS = -g -std=c++11
 TARGET = Server
 OBJS = ServerMain.o ServerFunction.o
-SRCS = $(SRCS:.o=.c)
-HEADERS = ServerFunction.h
+SRCS = $(SRCS:.o=.cpp)
+HEADERS = ServerFunction.h json.hpp
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-%.o: %.c $(HEADERS)
+%.o: %.cpp $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

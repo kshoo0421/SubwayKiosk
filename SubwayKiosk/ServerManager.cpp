@@ -69,6 +69,13 @@ void ServerManager::SendJsonToServer(const json& j) {
     // 5. 서버에 요청 전송
     send(sock, request.c_str(), request.length(), 0);
     qDebug() << "JSON data sent to server";
+    
+    // 6. 응답 받기
+    string sJsonResponse = ReceiveDataFromServer();
+    int waitingNum;
+    json jsonResponse = StringToJson(jsonResponse);
+    jsonResponse.at("waiting number").get_to(waitingNum);
+    qDebug() << waitingNum;
 }
 
 string ServerManager::ReceiveDataFromServer() {
@@ -78,7 +85,15 @@ string ServerManager::ReceiveDataFromServer() {
         // 버퍼를 문자열로 변환 후 출력
         string response(buffer.begin(), buffer.begin() + valRead);
         cout << "Server response:\n" << response << endl;
-        return response;  // 문자열을 반환
+
+        // HTTP 요청에서 본문 추출
+        size_t contentPos = response.find("\r\n\r\n");
+        string jsonBody = "";
+        if (contentPos != string::npos) {
+            jsonBody = response.substr(contentPos + 4);
+        }
+
+        return jsonBody;  // json 문자열 반환
     }
     else if (valRead == 0) {
         cout << "Connection closed by server." << endl;
