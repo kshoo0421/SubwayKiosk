@@ -9,11 +9,11 @@ const QMap<int,QString> ManageFrame::imagePaths = {
     {2,  ":/Resources/tuna.png"},
     {3, ":/Resources/blt.png"},
     {4, ":/Resources/italianBMT.png"},
+    {5, ":/Resources/veggie.png"},
 };
 
 QPixmap ManageFrame::getImage(int n) const {
     QString path = imagePaths.value(n,QString());
-    qDebug()<<"path = "<<path;
     return QPixmap(imagePaths.value(n, QString())); // 프레임 번호에 해당하는 이미지 반환, 기본값은 빈 문자열
 }
 

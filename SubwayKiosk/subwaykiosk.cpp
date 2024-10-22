@@ -15,6 +15,7 @@
 #include <QHeaderView>
 #include <QButtonGroup>
 #include <QRadioButton>
+#include <QCheckBox>
 #include "ServerManager.h"
 #include "DatabaseManager.h"
 
@@ -23,8 +24,6 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
     , ui(new Ui::SubwayKiosk)
 {
     ui->setupUi(this);
-
-
 
     /* 버튼 카테고리 */
     QPushButton *btnCategories[] = {
@@ -50,11 +49,7 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
         ui->frameEggMayo, ui->frameHam, ui->frameTuna, ui->frameBLT, ui->frameBMT,
     };
     /* 메뉴 선택 시 연결 창 */
-
-
     modal->setFixedSize(QSize(600,400));
-
-    SQLManager *sql =  SQLManager::getInstance(); //sql 저장 정보 가져오기
 
     // 클릭한 프레임에 해당하는 enum을 사용해 SQL에서 정보를 가져와서 출력
     for (int i = 0; i < 5; ++i) {
@@ -72,7 +67,7 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
             QLabel *imageLabel = new QLabel();
             imageLabel->setPixmap(image.scaled(200, 200, Qt::KeepAspectRatio)); // 이미지 크기 조정 (원하는 크기로 설정)
 
-            QLabel *title = new QLabel(sql->GetDetail(sandwichType).name); // 샌드위치 이름
+            QLabel *title = new QLabel(dataManager.sqlManager.GetDetail(sandwichType).nameKr); // 샌드위치 이름
 
             //성분표
             QTableWidget *table = new QTableWidget;
@@ -83,7 +78,7 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
             table->setHorizontalHeaderLabels(header);
 
             QStringList content;
-            content <<QString::number(sql->GetDetail(sandwichType).kcal)<<QString::number(sql->GetDetail(sandwichType).protein)<<QString::number(sql->GetDetail(sandwichType).saturatedFatty)<<QString::number(sql->GetDetail(sandwichType).sugar)<<QString::number(sql->GetDetail(sandwichType).natrium);
+            content <<QString::number(dataManager.sqlManager.GetDetail(sandwichType).kcal)<<QString::number(dataManager.sqlManager.GetDetail(sandwichType).protein)<<QString::number(dataManager.sqlManager.GetDetail(sandwichType).saturatedFatty)<<QString::number(dataManager.sqlManager.GetDetail(sandwichType).sugar)<<QString::number(dataManager.sqlManager.GetDetail(sandwichType).natrium);
             table->insertRow(0);
             for(int j = 0; j < 5; j++)
             {
@@ -98,14 +93,14 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
 
             QLabel *info = new QLabel("상세설명");
             info->setStyleSheet("font : bold;");
-            QLabel *expln = new QLabel(sql->GetDetail(sandwichType).expln); // 상세 설명
+            QLabel *expln = new QLabel(dataManager.sqlManager.GetDetail(sandwichType).expln); // 상세 설명
 
             title->setAlignment(Qt::AlignCenter); // 이름 가운데 정렬
             title->setStyleSheet("font : bold; font-size: 16px;"); //이름 스타일 설정
 
             imageLabel->setAlignment(Qt::AlignCenter); //이미지 가운데 정렬
 
-            //  expln->setWordWrap(true); //자동 줄 바꿈
+              expln->setWordWrap(true); //자동 줄 바꿈
             // expln->setMaximumWidth(350); // 최대 너비 설정
 
             QPushButton *btnCancel = new QPushButton; //취소 버튼
@@ -146,7 +141,6 @@ SubwayKiosk::~SubwayKiosk()
 
 void SubwayKiosk::applyBtnStyle( int size, int selectedIdx)
 {
-
     /* 버튼 카테고리 */
     QPushButton *btnCategories[] = {
         ui->btnSandwich, ui->btnCookie, ui->btnChip, ui->btnDrink,
@@ -212,15 +206,33 @@ void SubwayKiosk::selectOrder() //재료 선택(주문 버튼)
     modal->close();
     //위젯 추가해서 위에 쌓기
 
-    QStackedWidget *orderWidget = new QStackedWidget;
-
     QWidget* sizeWidget = selectSize(); //사이즈 선택 위젯 생성
-
+    QWidget* breadWidget = selectBread(); //빵 선택 위젯 생성
+    QWidget* toppingWidget = selectTopping(); //토핑 선택 위젯 생성
+    QWidget* cheeseWidget = selectCheese(); //치즈 선택 위젯 생성
+    QWidget* vegetableWidget = selectVegetable(); //야채 선택 위젯 생성
+    QWidget* sauceWidget = selectSauce(); //야채 선택 위젯 생성
+    QWidget* cookieWidget = selectCookie(); //쿠키 선택 위젯 생성
+    QWidget* drinkWidget = selectDrink(); //음료 선택 위젯 생성
+    QWidget* chipsWidget = selectChips(); //칩 선택 위젯 생성
 
     orderWidget->addWidget(sizeWidget);
+    orderWidget->addWidget(breadWidget);
+    orderWidget->addWidget(toppingWidget);
+    orderWidget->addWidget(cheeseWidget);
+    orderWidget->addWidget(vegetableWidget);
+    orderWidget->addWidget(sauceWidget);
+    orderWidget->addWidget(cookieWidget);
+    orderWidget->addWidget(drinkWidget);
+    orderWidget->addWidget(chipsWidget);
+
+    orderWidget->setCurrentIndex(0);
 
     // 주문 모달 생성
     QDialog *orderModal = new QDialog;
+    connect(orderModal,&QDialog::rejected,this,[=](){ //모달 창 종료 시 StackedWidget 초기화
+        orderWidget = new QStackedWidget;
+    });
     orderModal->setFixedSize(QSize(500,400));
     orderModal->setStyleSheet("background-color : white;");
     orderModal->setLayout(new QVBoxLayout); // 새로운 레이아웃 설정 (모달이 이미 열려있어야 함)
@@ -228,24 +240,12 @@ void SubwayKiosk::selectOrder() //재료 선택(주문 버튼)
     orderModal->show();
 
 }
-
+/* 사이즈 선택 위젯 구성 */
 QWidget* SubwayKiosk::selectSize()
 {
     /* 사이즈 선택 */
     QWidget *sizeWidget = new QWidget; //크기 선택 위젯
     QVBoxLayout *sizeLayout = new QVBoxLayout(sizeWidget); //수직 레이아웃 생성
-
-    QPushButton *prev = new QPushButton; //이전 버튼
-    QPushButton *next = new QPushButton; //다음 버튼
-    prev->setText(QString("이전"));
-    next->setText(QString("다음"));
-    next->setStyleSheet("background-color : red; color : white; font : bold;");
-
-    // 버튼 가로 배치할 레이아웃
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(prev);  // 취소 버튼 추가
-    layout->addWidget(next);  // 주문 버튼 추가
-
 
     QLabel* title = new QLabel("사이즈 선택");
     title->setStyleSheet("font : bold; font-size : 20px;");
@@ -267,6 +267,20 @@ QWidget* SubwayKiosk::selectSize()
     btnGroup->addButton(option[0]);
     btnGroup->addButton(option[1]);
 
+    //이전, 다음 버튼
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
     sizeLayout->addWidget(title);
     sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
     sizeLayout->addWidget(option[0]);
@@ -278,6 +292,422 @@ QWidget* SubwayKiosk::selectSize()
     sizeLayout->setAlignment(option[1], Qt::AlignCenter);
 
     return sizeWidget;
+}
+
+/* 빵 선택 위젯 구성 */
+QWidget* SubwayKiosk::selectBread()
+{
+    /* 사이즈 선택 */
+    QWidget *breadWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(breadWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+
+    QLabel* title = new QLabel("빵 선택");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+
+    QRadioButton *option[6];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> bread = dataManager.sqlManager.GetBreadList();
+
+    for(int i = 0;i<6;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QRadioButton(bread[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<6;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+     sizeLayout->addLayout(layout);
+
+    return breadWidget;
+}
+
+/* 토핑 선택 위젯 구성 */
+QWidget* SubwayKiosk::selectTopping()
+{
+    QWidget *toppingWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(toppingWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+    QLabel* title = new QLabel("추가 재료");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+    QCheckBox *option[7];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> topping = dataManager.sqlManager.GetToppingList();
+
+    for(int i = 0;i<7;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QCheckBox(topping[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+    btnGroup->setExclusive(false); //복수 선택 가능
+
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<7;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+    sizeLayout->addLayout(layout);
+
+    return toppingWidget;
+}
+
+/* 치즈 선택 위젯 구성 */
+QWidget* SubwayKiosk::selectCheese()
+{
+    QWidget *cheeseWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(cheeseWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+    QLabel* title = new QLabel("치즈");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+    QRadioButton *option[3];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> cheese = dataManager.sqlManager.GetCheeseList();
+
+    for(int i = 0;i<3;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QRadioButton(cheese[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<3;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+    sizeLayout->addLayout(layout);
+
+    return cheeseWidget;
+}
+/* 야채 선택 위젯 */
+QWidget* SubwayKiosk::selectVegetable()
+{
+    QWidget *vegetableWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(vegetableWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+    QLabel* title = new QLabel("야채");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+    QCheckBox *option[8];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> vegetable = dataManager.sqlManager.GetVegetableList();
+
+    for(int i = 0;i<8;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QCheckBox(vegetable[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+    btnGroup->setExclusive(false); //복수 선택 가능
+
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<8;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+    sizeLayout->addLayout(layout);
+
+    return vegetableWidget;
+}
+/* 소스 선택 위젯 */
+QWidget* SubwayKiosk::selectSauce()
+{
+    QWidget *sauceWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(sauceWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+    QLabel* title = new QLabel("소스");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+    QCheckBox *option[14];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> sauce = dataManager.sqlManager.GetSauceList();
+
+    for(int i = 0;i<14;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QCheckBox(sauce[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+    btnGroup->setExclusive(false); //복수 선택 가능
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<14;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+    sizeLayout->addLayout(layout);
+
+    return sauceWidget;
+}
+/* 쿠키 선택 위젯 */
+QWidget* SubwayKiosk::selectCookie()
+{
+    QWidget *cookieWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(cookieWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+    QLabel* title = new QLabel("쿠키");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+    QRadioButton *option[5];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> cookie = dataManager.sqlManager.GetCookieList();
+
+    for(int i = 0;i<5;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QRadioButton(cookie[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<5;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+    sizeLayout->addLayout(layout);
+
+    return cookieWidget;
+}
+/* 음료 선택 위젯 */
+QWidget* SubwayKiosk::selectDrink()
+{
+    QWidget *drinkWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(drinkWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+    QLabel* title = new QLabel("음료");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+    QRadioButton *option[3];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> drink = dataManager.sqlManager.GetDrinkList();
+
+    for(int i = 0;i<3;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QRadioButton(drink[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<3;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+    sizeLayout->addLayout(layout);
+
+    return drinkWidget;
+}
+/* 감자칩 선택 위젯 */
+QWidget* SubwayKiosk::selectChips()
+{
+    QWidget *chipsWidget = new QWidget; //크기 선택 위젯
+    QVBoxLayout *sizeLayout = new QVBoxLayout(chipsWidget); //수직 레이아웃 생성
+
+    QPushButton *prev = new QPushButton; //이전 버튼
+    QPushButton *next = new QPushButton; //다음 버튼
+    prev->setText(QString("이전"));
+    next->setText(QString("다음"));
+    next->setStyleSheet("background-color : red; color : white; font : bold;");
+    connect(prev,SIGNAL(clicked()),this,SLOT(movePrev()));
+    connect(next,SIGNAL(clicked()),this,SLOT(moveNext()));
+
+    // 버튼 가로 배치할 레이아웃
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(prev);  // 취소 버튼 추가
+    layout->addWidget(next);  // 주문 버튼 추가
+
+    QLabel* title = new QLabel("감자칩");
+    title->setStyleSheet("font : bold; font-size : 20px;");
+
+    // 가로줄 추가
+    QFrame *line = new QFrame();
+    line->setFrameShape(QFrame::HLine); // 수평선 설정
+    line->setStyleSheet("color: gray;"); // 선 색상 설정
+
+    QRadioButton *option[5];
+    QButtonGroup *btnGroup = new QButtonGroup(this);
+    QList<QString> chips = dataManager.sqlManager.GetChipsList();
+
+    for(int i = 0;i<5;i++){
+        MainSandwich sandwichType = static_cast<MainSandwich>(i); // enum 값으로 변환
+        option[i] = new QRadioButton(chips[i],this);
+        option[i]->setStyleSheet("font-size : 20px;");
+        btnGroup->addButton(option[i]);
+    }
+
+    sizeLayout->addWidget(title);
+    sizeLayout->addWidget(line); // 제목과 옵션 사이에 가로줄 추가
+    for(int i =0;i<5;i++)
+    {
+        sizeLayout->addWidget(option[i]);
+        sizeLayout->setAlignment(option[i], Qt::AlignCenter); //버튼 가운데 정렬
+    }
+    sizeLayout->addLayout(layout);
+
+    return chipsWidget;
+}
+
+void SubwayKiosk::moveNext()
+{
+    int idx = orderWidget->currentIndex();
+    orderWidget->setCurrentIndex(idx+1);
+}
+
+void SubwayKiosk::movePrev()
+{
+    int idx = orderWidget->currentIndex();
+    if(idx>0)
+        orderWidget->setCurrentIndex(idx-1);
 }
 
 //#include "ServerManager.h"
