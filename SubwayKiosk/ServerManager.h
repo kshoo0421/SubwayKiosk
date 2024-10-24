@@ -46,7 +46,7 @@ private:
     string JsonToString(const json& j) { return j.dump(); }
 
 public:
-    void SendCartToServer(const Cart& cart);
+    int SendCartToServer(const Cart& cart);
     string CartToJsonString(const Cart& cart);
     void StringToCart(Cart& cart, const string& sJson);
     // 장바구니 데이터 보내기

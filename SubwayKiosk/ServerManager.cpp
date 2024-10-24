@@ -58,7 +58,7 @@ void ServerManager::ConnectToServer() {
     }
 }
 
-void ServerManager::SendJsonToServer(const json& j) {
+int ServerManager::SendJsonToServer(const json& j) {
     string json_data = JsonToString(j); // string으로 변환
     string request = "POST / HTTP/1.1\r\n"
             "Host: " + string(SERVER_ADDR) + "\r\n"
@@ -75,7 +75,7 @@ void ServerManager::SendJsonToServer(const json& j) {
     int waitingNum;
     json jsonResponse = StringToJson(jsonResponse);
     jsonResponse.at("waiting number").get_to(waitingNum);
-    qDebug() << waitingNum;
+    return waitingNum;
 }
 
 string ServerManager::ReceiveDataFromServer() {
