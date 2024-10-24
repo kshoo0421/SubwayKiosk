@@ -91,12 +91,14 @@ string ServerManager::ReceiveDataFromServer() {
         cout << "Server response:\n" << response << endl;
 
         // HTTP 요청에서 본문 추출
-        size_t contentPos = response.find("\r\n\r\n");
+        size_t contentPos = response.find("\n\n");
         string jsonBody = "";
         if (contentPos != string::npos) {
-            jsonBody = response.substr(contentPos + 4);
+            jsonBody = response.substr(contentPos);
         }
-        if(jsonBody == "") jsonBody = "substr error";
+        if(jsonBody == "") {jsonBody = "substr error";
+            qDebug() << response;
+        }
         return jsonBody;  // json 문자열 반환
     }
     else if (valRead == 0) {
@@ -203,6 +205,7 @@ int ServerManager::SendCartToServer(const Cart& cart) {
     qDebug()<< "SendCartToServer1";
     int waitingNum = SendJsonToServer(jTotal);
     qDebug()<< "SendCartToServer2";
+    qDebug() << waitingNum;
     return waitingNum;
 }
 
