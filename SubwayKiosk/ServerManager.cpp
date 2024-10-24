@@ -13,7 +13,7 @@ ServerManager::ServerManager() {
 
     /*====== 여길 수정하시면 됩니다 ==========*/
 
-    // ConnectToServer(); // 서버 연결
+     ConnectToServer(); // 서버 연결
 
     /*===================================*/
 
@@ -58,6 +58,7 @@ void ServerManager::ConnectToServer() {
     }
 }
 
+
 int ServerManager::SendJsonToServer(const json& j) {
     string json_data = JsonToString(j); // string으로 변환
     string request = "POST / HTTP/1.1\r\n"
@@ -72,9 +73,12 @@ int ServerManager::SendJsonToServer(const json& j) {
     
     // 6. 응답 받기
     string sJsonResponse = ReceiveDataFromServer();
+    qDebug() << sJsonResponse;
     int waitingNum;
-    json jsonResponse = StringToJson(jsonResponse);
+    qDebug() << "1";
+    json jsonResponse = StringToJson(sJsonResponse);
     jsonResponse.at("waiting number").get_to(waitingNum);
+    qDebug() << "2";
     return waitingNum;
 }
 
@@ -196,7 +200,9 @@ int ServerManager::SendCartToServer(const Cart& cart) {
             {"Total Count", cart.totalCnt},
             {"Total Price", cart.totalPrice}
         };
+    qDebug()<< "SendCartToServer1";
     int waitingNum = SendJsonToServer(jTotal);
+    qDebug()<< "SendCartToServer2";
     return waitingNum;
 }
 

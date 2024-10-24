@@ -72,6 +72,16 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
     ui->cartList->addItem(itemDrink);
     ui->cartList->setItemWidget(itemDrink, toggleDrink);
 
+    ui->btnOrder->setStyleSheet("{ background-color: rgba(255, 255, 255, 0);color:white;  }");
+    connect(ui->btnOrder,&QPushButton::clicked,this,[=](){
+        vector<Sandwich>  tmp = cart.GetSandwiches();
+        for(auto it:tmp)
+        {
+            qDebug()<<"장바구니 내역"<<static_cast<int>(it.GetSelected().menu);
+        }
+        int waitNum = dataManager.serverManager.SendCartToServer(cart);
+        qDebug()<<"대기번호";
+    });
 
     /* 버튼 클릭 시 페이지 이동 */  
     for (int i = 0; i < 4; ++i) {
@@ -1088,7 +1098,9 @@ void SubwayKiosk::addToCartItems(MainSandwich sandwich) //장바구니 샌드위
     QListWidgetItem *itemSandwich = new QListWidgetItem(ui->cartList);
      itemSandwich->setSizeHint(sandwichToggleWidget->sizeHint()); // 항목의 크기를 위젯에 맞춤
     ui->cartList->addItem(itemSandwich);
-  ui->cartList->setItemWidget(itemSandwich, sandwichToggleWidget);
+    ui->cartList->setItemWidget(itemSandwich, sandwichToggleWidget);
+
+    cart.Add(selected);
 }
 
 void SubwayKiosk::moveNext()
