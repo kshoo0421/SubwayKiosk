@@ -34,5 +34,8 @@
         <file>Resources/fanta.png</file>
         <file>Resources/sprite.png</file>
         <file>Resources/cart.png</file>
+        <file>Resources/pringles.jpg</file>
+        <file>Resources/SUBDOKU.png</file>
+        <file>Resources/downArrow.png</file>
     </qresource>
 </RCC>

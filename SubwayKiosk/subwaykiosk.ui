@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>909</width>
-    <height>781</height>
+    <width>1198</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,7 +53,7 @@
      <rect>
       <x>-10</x>
       <y>0</y>
-      <width>931</width>
+      <width>1211</width>
       <height>51</height>
      </rect>
     </property>
@@ -69,7 +69,7 @@
      <rect>
       <x>-10</x>
       <y>670</y>
-      <width>921</width>
+      <width>1211</width>
       <height>51</height>
      </rect>
     </property>
@@ -155,7 +155,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -424,7 +424,7 @@
               </rect>
              </property>
              <property name="text">
-              <string>에그 마요</string>
+              <string>에그마요</string>
              </property>
             </widget>
            </widget>
@@ -456,14 +456,14 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
+           <y>-140</y>
            <width>879</width>
            <height>629</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
-           <widget class="QFrame" name="frame_10">
+           <widget class="ManageFrame" name="frameVeggie">
             <property name="minimumSize">
              <size>
               <width>281</width>
@@ -511,7 +511,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QFrame" name="frame_9">
+           <widget class="ManageFrame" name="frameChickSlice">
             <property name="minimumSize">
              <size>
               <width>281</width>
@@ -559,7 +559,7 @@
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QFrame" name="frame_8">
+           <widget class="ManageFrame" name="frameSubwayClub">
             <property name="minimumSize">
              <size>
               <width>281</width>
@@ -607,7 +607,7 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QFrame" name="frame_11">
+           <widget class="ManageFrame" name="frameRot">
             <property name="minimumSize">
              <size>
               <width>281</width>
@@ -655,7 +655,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QFrame" name="frame_12">
+           <widget class="ManageFrame" name="frameRoast">
             <property name="minimumSize">
              <size>
               <width>281</width>
@@ -732,14 +732,14 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
+           <y>-345</y>
            <width>869</width>
            <height>876</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
-           <widget class="QFrame" name="frame_14">
+           <widget class="ManageFrame" name="frameSpicy">
             <property name="minimumSize">
              <size>
               <width>278</width>
@@ -787,7 +787,7 @@
            </widget>
           </item>
           <item row="0" column="3">
-           <widget class="QFrame" name="frame_16">
+           <widget class="ManageFrame" name="frameSteak">
             <property name="minimumSize">
              <size>
               <width>278</width>
@@ -835,7 +835,7 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QFrame" name="frame_15">
+           <widget class="ManageFrame" name="frameTeri">
             <property name="minimumSize">
              <size>
               <width>277</width>
@@ -883,7 +883,7 @@
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QFrame" name="frame_18">
+           <widget class="ManageFrame" name="frameShrimp">
             <property name="minimumSize">
              <size>
               <width>278</width>
@@ -931,7 +931,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QFrame" name="frame_13">
+           <widget class="ManageFrame" name="framePulled">
             <property name="minimumSize">
              <size>
               <width>277</width>
@@ -979,7 +979,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QFrame" name="frame_23">
+           <widget class="ManageFrame" name="frameKBBQ">
             <property name="minimumSize">
              <size>
               <width>278</width>
@@ -1027,7 +1027,7 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QFrame" name="frame_17">
+           <widget class="ManageFrame" name="frameAvocado">
             <property name="minimumSize">
              <size>
               <width>278</width>
@@ -1128,7 +1128,7 @@
               <string>안창 비프</string>
              </property>
             </widget>
-            <widget class="QFrame" name="frame_19">
+            <widget class="ManageFrame" name="frameLobster">
              <property name="geometry">
               <rect>
                <x>280</x>
@@ -1182,7 +1182,7 @@
               </property>
              </widget>
             </widget>
-            <widget class="QFrame" name="frame_24">
+            <widget class="ManageFrame" name="frameHalf">
              <property name="geometry">
               <rect>
                <x>568</x>
@@ -1236,7 +1236,7 @@
               </property>
              </widget>
             </widget>
-            <widget class="QFrame" name="frame_21">
+            <widget class="ManageFrame" name="frameBeefMush">
              <property name="geometry">
               <rect>
                <x>-8</x>
@@ -1290,7 +1290,7 @@
               </property>
              </widget>
             </widget>
-            <widget class="QFrame" name="frame_20">
+            <widget class="ManageFrame" name="frameSpicyShrimp">
              <property name="geometry">
               <rect>
                <x>-8</x>
@@ -1344,7 +1344,7 @@
               </property>
              </widget>
             </widget>
-            <widget class="QFrame" name="frame_25">
+            <widget class="ManageFrame" name="frameBeef">
              <property name="geometry">
               <rect>
                <x>280</x>
@@ -1719,7 +1719,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="image.qrc">:/Resources/ohgam.jpeg</pixmap>
+        <pixmap resource="image.qrc">:/Resources/pringles.jpg</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1728,14 +1728,14 @@
       <widget class="QLabel" name="textOhGam">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>100</x>
          <y>200</y>
          <width>61</width>
          <height>31</height>
         </rect>
        </property>
        <property name="text">
-        <string>오! 감자</string>
+        <string>프링글스</string>
        </property>
       </widget>
      </widget>
@@ -1904,6 +1904,60 @@
        </property>
        <property name="text">
         <string>스윙칩</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_43">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>280</y>
+        <width>281</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>281</width>
+        <height>255</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label_92">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>50</y>
+         <width>181</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="image.qrc">:/Resources/ohgam.jpeg</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="textOhGam_2">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>200</y>
+         <width>61</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>오! 감자</string>
        </property>
       </widget>
      </widget>
@@ -2090,28 +2144,52 @@
     </property>
     <layout class="QGridLayout" name="gridLayout"/>
    </widget>
-   <widget class="QPushButton" name="btnCart">
+   <widget class="QListWidget" name="cartList">
     <property name="geometry">
      <rect>
-      <x>860</x>
+      <x>920</x>
+      <y>50</y>
+      <width>281</width>
+      <height>671</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelCart">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>0</y>
+      <width>221</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>장바구니</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
       <y>0</y>
       <width>51</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color : #e64931</string>
+    </property>
     <property name="text">
      <string/>
     </property>
-    <property name="iconSize">
-     <size>
-      <width>30</width>
-      <height>30</height>
-     </size>
+    <property name="pixmap">
+     <pixmap resource="image.qrc">:/Resources/cart.png</pixmap>
     </property>
-    <property name="flat">
+    <property name="scaledContents">
      <bool>true</bool>
     </property>
    </widget>
+   <zorder>cartList</zorder>
    <zorder>titleBar</zorder>
    <zorder>logoLabel</zorder>
    <zorder>titleBar_2</zorder>
@@ -2121,14 +2199,15 @@
    <zorder>btnDrink</zorder>
    <zorder>selectMenuWidget</zorder>
    <zorder>layoutWidget</zorder>
-   <zorder>btnCart</zorder>
+   <zorder>labelCart</zorder>
+   <zorder>label</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>909</width>
+     <width>1198</width>
      <height>26</height>
     </rect>
    </property>

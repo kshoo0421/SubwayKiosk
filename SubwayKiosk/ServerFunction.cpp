@@ -1,5 +1,7 @@
 #include "ServerFunction.h"
+#include "json.hpp"
 using namespace std;
+using json = nlohmann::json;
 
 static int server_fd;
 static struct sockaddr_in address;
@@ -128,7 +130,7 @@ void HandleClient(int clientSocket) {
     cout << "Received JSON data: " << body << endl;
 
     // JSON 데이터를 파일에 저장
-    string fileName = "cart " + to_string(curIdx) + ".json";
+    string fileName = "cart_" + to_string(curIdx) + ".json";
     ofstream jsonFile("/home/pi/SubwayKiosk/Data/" + fileName);
     if (jsonFile.is_open()) {
         jsonFile << body;
@@ -139,10 +141,9 @@ void HandleClient(int clientSocket) {
         cerr << "Failed to open file for writing" << endl;
     }
     // JSON 응답 생성
-    string responseBody = "{message: Data received successfully\n\
-        status: OK\nidx: "; 
-    responseBody += curIdx;
-    responseBody += "}";
+    json j = json{{"message", "Data received successfully"},
+        {"status", "OK"}, {"waiting number", curIdx}, {"Type", "response"}};
+    string responseBody = j.dump();
 
     // HTTP 응답 생성
     ostringstream response;
