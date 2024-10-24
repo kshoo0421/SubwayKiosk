@@ -96,7 +96,7 @@ string ServerManager::ReceiveDataFromServer() {
         if (contentPos != string::npos) {
             jsonBody = response.substr(contentPos + 4);
         }
-
+        if(jsonBody == "") jsonBody = "substr error";
         return jsonBody;  // json 문자열 반환
     }
     else if (valRead == 0) {
@@ -105,7 +105,7 @@ string ServerManager::ReceiveDataFromServer() {
     else {
         cerr << "Failed to receive response from server. Error code: " << WSAGetLastError() << endl;
     }
-    return "";  // 오류 시 빈 문자열 반환
+    return "return error";  // 오류 시 빈 문자열 반환
 }
 
 json ServerManager::StringToJson(const string& s) {
