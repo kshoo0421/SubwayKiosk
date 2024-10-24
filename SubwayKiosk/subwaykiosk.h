@@ -68,7 +68,7 @@ public:
 
     void addToCartItems(MainSandwich); //샌드위치 장바구니 담기
 
-
+    Cart cart; //장바구니
 public slots:
     void SihooTest();
     void closeModal(); //모달 종료

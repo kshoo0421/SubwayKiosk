@@ -456,7 +456,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-140</y>
+           <y>0</y>
            <width>879</width>
            <height>629</height>
           </rect>
@@ -732,7 +732,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-345</y>
+           <y>0</y>
            <width>869</width>
            <height>876</height>
           </rect>
@@ -2189,6 +2189,19 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnOrder">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>670</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>주문하기</string>
+    </property>
+   </widget>
    <zorder>cartList</zorder>
    <zorder>titleBar</zorder>
    <zorder>logoLabel</zorder>
@@ -2201,6 +2214,7 @@
    <zorder>layoutWidget</zorder>
    <zorder>labelCart</zorder>
    <zorder>label</zorder>
+   <zorder>btnOrder</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
