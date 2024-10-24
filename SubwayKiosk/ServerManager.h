@@ -37,7 +37,7 @@ private:
     ~ServerManager();
     void ConnectToServer();
 
-    void SendJsonToServer(const json& j);   // 서버로 json 데이터 송신
+    int SendJsonToServer(const json& j);   // 서버로 json 데이터 송신
     string ReceiveDataFromServer();         // 서버로부터 string 데이터 수신
 
     // 이미 json 형식인 string을 json 구조체로 변환

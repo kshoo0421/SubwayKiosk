@@ -1077,7 +1077,7 @@ void SubwayKiosk::addToCartItems(MainSandwich sandwich) //장바구니 샌드위
      sandwichLayoutToggle->addWidget(sandwichLabel);   // 샌드위치 항목을 토글 아래에 추가
 
     // 처음에는 항목을 숨김 상태로 설정
-    sandwichLabel->setVisible(toggleSandwich->isChecked());
+    //sandwichLabel->setVisible(toggleSandwich->isChecked());
 
     // 토글 상태에 따라 항목 보이기/숨기기 연결
     connect(toggleSandwich, &QCheckBox::toggled, this, [sandwichLabel]() {

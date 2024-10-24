@@ -183,7 +183,7 @@ void from_json(const json& j, Sandwich& sandwich) {
     }
 }
 
-void ServerManager::SendCartToServer(const Cart& cart) {
+int ServerManager::SendCartToServer(const Cart& cart) {
     json jSandwich = cart.GetSandwiches();
     json jChips = cart.GetChips();
     json jCookie = cart.GetCookies();
@@ -196,7 +196,8 @@ void ServerManager::SendCartToServer(const Cart& cart) {
             {"Total Count", cart.totalCnt},
             {"Total Price", cart.totalPrice}
         };
-    SendJsonToServer(jTotal);
+    int waitingNum = SendJsonToServer(jTotal);
+    return waitingNum;
 }
 
 
