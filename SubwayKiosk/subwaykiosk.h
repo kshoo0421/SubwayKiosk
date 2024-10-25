@@ -13,6 +13,7 @@
 #include "ManageFrame.h"
 #include "DatabaseManager.h"
 #include "Sandwich.h"
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -33,7 +34,7 @@ public:
     Sandwich selected; //샌드위치 선택 정보 저장
 
     QDialog *modal = new QDialog(this); //모달 창
-    QVBoxLayout *modalLayout = new QVBoxLayout(modal); //모달 담을 레이아웃
+    QVBoxLayout *modalLayout; //모달 담을 레이아웃
     QDialog *orderModal;
 
     QCheckBox* setCartStyle(QString); //장바구니 카테고리 설정
@@ -42,7 +43,19 @@ public:
     QCheckBox *toggleChips;
     QCheckBox *toggleDrink ;
     QWidget *sandwichToggleWidget;
+    QWidget *cookieToggleWidget;
+    QWidget *chipsToggleWidget;
+    QWidget *drinkToggleWidget;
     QVBoxLayout *sandwichLayoutToggle;
+    QVBoxLayout *cookieLayoutToggle;
+    QVBoxLayout *chipsLayoutToggle;
+    QVBoxLayout *drinkLayoutToggle;
+    QListWidgetItem *itemSandwich;
+    QListWidgetItem *itemCookie;
+    QListWidgetItem *itemChips;
+    QListWidgetItem *itemDrink;
+
+    void clearCartList(QLayout *layout); //장바구니 항목 삭제
 
     void setMenuTextStyle(); //메뉴 이름 스타일 설정
     void applyBtnStyle( int size, int selectedIdx);
@@ -67,6 +80,9 @@ public:
     bool selectedSauce[14] = {false,}; //선택 정보 저장 배열
 
     void addToCartItems(MainSandwich); //샌드위치 장바구니 담기
+    void addToCartItems(Cookie); //쿠키 장바구니 담기
+     void addToCartItems(Chips); //감자칩 장바구니 담기
+    void addToCartItems(Drink); //음료 장바구니 담기
 
     Cart cart; //장바구니
 public slots:

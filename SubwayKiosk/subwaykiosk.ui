@@ -155,7 +155,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -1407,7 +1407,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_2">
-     <widget class="QFrame" name="frame_30">
+     <widget class="ManageFrame" name="frameRasp">
       <property name="geometry">
        <rect>
         <x>590</x>
@@ -1461,7 +1461,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_27">
+     <widget class="ManageFrame" name="frameChoco">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1515,7 +1515,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_29">
+     <widget class="ManageFrame" name="frameDouble">
       <property name="geometry">
        <rect>
         <x>300</x>
@@ -1569,7 +1569,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_28">
+     <widget class="ManageFrame" name="frameOat">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1629,7 +1629,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_26">
+     <widget class="ManageFrame" name="frameWhite">
       <property name="geometry">
        <rect>
         <x>300</x>
@@ -1685,7 +1685,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_3">
-     <widget class="QFrame" name="frame_36">
+     <widget class="ManageFrame" name="framePring">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -1739,7 +1739,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_37">
+     <widget class="ManageFrame" name="frameNacho">
       <property name="geometry">
        <rect>
         <x>600</x>
@@ -1793,7 +1793,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_38">
+     <widget class="ManageFrame" name="framePoka">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -1853,7 +1853,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_39">
+     <widget class="ManageFrame" name="frameSwing">
       <property name="geometry">
        <rect>
         <x>310</x>
@@ -1907,7 +1907,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_43">
+     <widget class="ManageFrame" name="frameOh">
       <property name="geometry">
        <rect>
         <x>310</x>
@@ -1963,7 +1963,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_4">
-     <widget class="QFrame" name="frame_40">
+     <widget class="ManageFrame" name="frameFanta">
       <property name="geometry">
        <rect>
         <x>590</x>
@@ -2017,7 +2017,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_41">
+     <widget class="ManageFrame" name="frameCoke">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -2077,7 +2077,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_42">
+     <widget class="ManageFrame" name="frameSprite">
       <property name="geometry">
        <rect>
         <x>300</x>
@@ -2204,7 +2204,6 @@
    </widget>
    <zorder>cartList</zorder>
    <zorder>titleBar</zorder>
-   <zorder>logoLabel</zorder>
    <zorder>titleBar_2</zorder>
    <zorder>btnSandwich</zorder>
    <zorder>btnCookie</zorder>
@@ -2215,6 +2214,7 @@
    <zorder>labelCart</zorder>
    <zorder>label</zorder>
    <zorder>btnOrder</zorder>
+   <zorder>logoLabel</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

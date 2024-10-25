@@ -38,6 +38,8 @@ public:
     void RemoveCookie(int index); //쿠키 제거
     void RemoveDrink(int index); //음료 제거
 
+    void clear();
+
     /* 장바구니 내용 반환 */
     vector<Sandwich> GetSandwiches() const; // 샌드위치 목록 반환
     vector<Chips> GetChips() const; // 칩 목록 반환

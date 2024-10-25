@@ -81,6 +81,17 @@ void Cart::RemoveDrink(int index) // 음료 제거
     }
 }
 
+void Cart::clear()
+{
+
+    sandwich.clear(); // 샌드위치 저장
+    chips.clear(); //칩 저장
+    cookie.clear(); //쿠키 저장
+    drinks.clear(); //음료 저장
+    totalCnt = 0;
+    totalPrice = 0; // 총 가격
+}
+
 /* 총 가격 계산 */
 int Cart::CalculateTotal()
 {

@@ -32,10 +32,12 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
         ui->btnSandwich, ui->btnCookie, ui->btnChip, ui->btnDrink,
     };
 
+
     // 스타일 기본 설정
     applyBtnStyle(4, 0); // 초기 설정 (-1 : 선택된 버튼 없음)
     setMenuTextStyle(); // 메뉴 텍스트 스타일 설정
     ui->labelCart->setStyleSheet("background-color: rgba(255, 255, 255, 0); color : white; font : bold; font-size : 20px;"); //장바구니 제목
+    modalLayout = new QVBoxLayout(modal);
 
     //장바구니 토글 설정
     toggleSandwich = setCartStyle("샌드위치"); toggleSandwich->adjustSize();
@@ -43,43 +45,68 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
     toggleChips = setCartStyle("칩");toggleChips->setFixedSize(280, 20);
     toggleDrink = setCartStyle("음료");toggleDrink->setFixedSize(280, 20);
 
-    // Sandwich 토글과 그 밑에 항목들을 담을 위젯 생성
+    // Sandwich 토글과 항목 담을 위젯 생성
     sandwichToggleWidget = new QWidget(this);
     sandwichLayoutToggle = new QVBoxLayout(sandwichToggleWidget);
-    sandwichLayoutToggle->setContentsMargins(0, 0, 0, 0);
+  sandwichLayoutToggle->setContentsMargins(0, 0, 0, 0);
 
+    // Cookie 토글과 항목 담을 위젯
+    cookieToggleWidget = new QWidget(this);
+    cookieLayoutToggle = new QVBoxLayout(cookieToggleWidget);
+    cookieLayoutToggle->setContentsMargins(0, 0, 0, 0);
+
+    // Chips 토글과 그 밑에 항목들을 담을 위젯 생성
+    chipsToggleWidget = new QWidget(this);
+    chipsLayoutToggle = new QVBoxLayout(chipsToggleWidget);
+    chipsLayoutToggle->setContentsMargins(0, 0, 0, 0);
+
+    // Drink 토글과 항목 담을 위젯
+    drinkToggleWidget = new QWidget(this);
+    drinkLayoutToggle = new QVBoxLayout(drinkToggleWidget);
+    drinkLayoutToggle->setContentsMargins(0, 0, 0, 0);
 
     // 토글과 항목 레이아웃을 구분하여 설정
     sandwichLayoutToggle->addWidget(toggleSandwich);  // 토글을 레이아웃에 추가
+    cookieLayoutToggle->addWidget(toggleCookie);
+    chipsLayoutToggle->addWidget(toggleChips);
+    drinkLayoutToggle->addWidget(toggleDrink);
 
     // Sandwich 항목 추가
-    QListWidgetItem *itemSandwich = new QListWidgetItem(ui->cartList);
+    itemSandwich = new QListWidgetItem(ui->cartList);
     ui->cartList->addItem(itemSandwich);
     ui->cartList->setItemWidget(itemSandwich, toggleSandwich);
 
     // Cookie 항목 추가
-    QListWidgetItem *itemCookie = new QListWidgetItem(ui->cartList);
+    itemCookie = new QListWidgetItem(ui->cartList);
     ui->cartList->addItem(itemCookie);
     ui->cartList->setItemWidget(itemCookie, toggleCookie);
 
     // Chips 항목 추가
-    QListWidgetItem *itemChips = new QListWidgetItem(ui->cartList);
+    itemChips = new QListWidgetItem(ui->cartList);
     ui->cartList->addItem(itemChips);
     ui->cartList->setItemWidget(itemChips, toggleChips);
 
     // Drink 항목 추가
-    QListWidgetItem *itemDrink = new QListWidgetItem(ui->cartList);
+    itemDrink = new QListWidgetItem(ui->cartList);
     ui->cartList->addItem(itemDrink);
     ui->cartList->setItemWidget(itemDrink, toggleDrink);
 
     ui->btnOrder->setStyleSheet("{ background-color: rgba(255, 255, 255, 0);color:white;  }");
-    connect(ui->btnOrder,&QPushButton::clicked,this,[=](){
+    connect(ui->btnOrder,&QPushButton::clicked,this,[this](){
         vector<Sandwich>  tmp = cart.GetSandwiches();
         for(auto it:tmp)
         {
             qDebug()<<"장바구니 내역"<<static_cast<int>(it.GetSelected().menu);
         }
-        int waitNum = dataManager.serverManager.SendCartToServer(cart);
+        int waitNum = dataManager.SendCartToServer(cart);
+        cart.clear();
+
+        clearCartList(sandwichToggleWidget->layout());
+        clearCartList(cookieToggleWidget->layout());
+        clearCartList(chipsToggleWidget->layout());
+        clearCartList(drinkToggleWidget->layout());
+
+             QMessageBox::information(this,"대기 번호","고객님의 대기번호는 " + QString::number(waitNum) + "입니다.");
         qDebug()<<"대기번호";
     });
 
@@ -90,13 +117,46 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
             applyBtnStyle(4, i); // 선택된 버튼 스타일 적용
         });
     }
+    //쿠키, 음료, 칩 프레임 클릭 시 바로 장바구니 넣기
 
-    ManageFrame *frameCategories[] = {
+    ManageFrame *frameCategories[] = { //샌드위치 프레임
         ui->frameEggMayo, ui->frameHam, ui->frameTuna, ui->frameBLT, ui->frameBMT,
         ui->frameVeggie, ui->frameChickSlice, ui->frameSubwayClub,ui->frameRot,ui->frameRoast,
         ui->frameTeri, ui->frameSpicy, ui->framePulled,ui->frameSteak, ui->frameAvocado, ui->frameShrimp, ui->frameKBBQ,
         ui->frameSpicyShrimp,ui->frameLobster,ui->frameHalf, ui->frameBeefMush,ui->frameBeef,
     };
+
+    ManageFrame *frameCookie[] = { //쿠키 프레임
+                             ui->frameOat,ui->frameWhite,ui->frameRasp,
+                             ui->frameChoco,ui->frameDouble,
+                             };
+
+    for (int i = 0; i < sizeof(frameCookie)/sizeof(ui->frameAvocado); ++i) {
+        connect(frameCookie[i],&ManageFrame::frameClicked,[=](){
+             Cookie cookieType = static_cast<Cookie>(i);
+             addToCartItems(cookieType);
+         });
+    }
+    ManageFrame *frameChips[] = { //감자칩 프레임
+        ui->framePoka,ui->frameSwing, ui->frameNacho,
+        ui->framePring,ui->frameOh,
+    };
+    for (int i = 0; i < sizeof(frameChips)/sizeof(ui->frameAvocado); ++i) {
+        connect(frameChips[i],&ManageFrame::frameClicked,[=](){
+            Chips chipsType = static_cast<Chips>(i);
+            addToCartItems(chipsType);
+        });
+    }
+
+    ManageFrame *frameDrink[]={
+                                 ui->frameCoke,ui->frameSprite,ui->frameFanta,
+    };
+    for (int i = 0; i < sizeof(frameDrink)/sizeof(ui->frameAvocado); ++i) {
+        connect(frameDrink[i],&ManageFrame::frameClicked,[=](){
+            Drink drinkType = static_cast<Drink>(i);
+            addToCartItems(drinkType);
+        });
+    }
 
     /* 샌드위치 메뉴 선택 시 연결 창 */
     modal->setFixedSize(QSize(600,400));
@@ -184,12 +244,23 @@ SubwayKiosk::SubwayKiosk(QWidget *parent)
             modal->exec(); // 모달 실행
         });
     }
-
 }
 
 SubwayKiosk::~SubwayKiosk()
 {
     delete ui;
+}
+
+void SubwayKiosk::clearCartList(QLayout *layout)
+{
+
+    if (layout) {
+        QLayoutItem *item;
+        while ((item = layout->takeAt(0))) {
+            delete item->widget(); // 위젯 삭제
+            delete item; // 레이아웃 아이템 삭제
+        }
+    }
 }
 
 void SubwayKiosk::applyBtnStyle( int size, int selectedIdx)
@@ -1016,6 +1087,7 @@ QWidget* SubwayKiosk::selectFinalCheck()
 
     // 선택된 내용을 문자열로 포맷팅
     QString contentText = "선택한 샌드위치: " + dataManager.sqlManager.GetDetail(selectedInfo.menu).nameKr + "\n";
+
     // 빵 선택 여부 확인
     int breadSize = static_cast<int>(selectedInfo.bread);
     if (breadSize >= 0 && breadSize < dataManager.sqlManager.GetBreadList().size()) {
@@ -1087,7 +1159,7 @@ void SubwayKiosk::addToCartItems(MainSandwich sandwich) //장바구니 샌드위
      sandwichLayoutToggle->addWidget(sandwichLabel);   // 샌드위치 항목을 토글 아래에 추가
 
     // 처음에는 항목을 숨김 상태로 설정
-    //sandwichLabel->setVisible(toggleSandwich->isChecked());
+    sandwichLabel->setVisible(toggleSandwich->isChecked());
 
     // 토글 상태에 따라 항목 보이기/숨기기 연결
     connect(toggleSandwich, &QCheckBox::toggled, this, [sandwichLabel]() {
@@ -1101,6 +1173,81 @@ void SubwayKiosk::addToCartItems(MainSandwich sandwich) //장바구니 샌드위
     ui->cartList->setItemWidget(itemSandwich, sandwichToggleWidget);
 
     cart.Add(selected);
+}
+
+void SubwayKiosk::addToCartItems(Cookie cookie) //장바구니 쿠키 토글에 추가
+{
+    // 선택된 쿠키 항목을 표시할 라벨 생성
+    QString cookieName = dataManager.sqlManager.GetCookieList().at(static_cast<int>(cookie)); // 쿠키 이름 가져오기
+    QLabel *cookieLabel = new QLabel(cookieName, this);
+    cookieLabel->adjustSize(); // 라벨 크기 조정
+    cookieLayoutToggle->addWidget(cookieLabel);   // 쿠키 항목을 토글 아래에 추가
+
+    // 처음에는 항목을 숨김 상태로 설정
+    cookieLabel->setVisible(toggleCookie->isChecked());
+
+    // 토글 상태에 따라 항목 보이기/숨기기 연결
+    connect(toggleCookie, &QCheckBox::toggled, this, [this,cookieLabel]() {
+        cookieLabel->setVisible(!cookieLabel->isVisible()); // 토글 상태에 따라 항목 가시성 변경
+    });
+
+    // Cookie 토글과 항목을 QListWidget에 추가
+    QListWidgetItem *itemCookie = new QListWidgetItem(ui->cartList);
+    itemCookie->setSizeHint(cookieToggleWidget->sizeHint()); // 항목의 크기를 위젯에 맞춤
+    ui->cartList->addItem(itemCookie);
+    ui->cartList->setItemWidget(itemCookie, cookieToggleWidget);
+
+    cart.Add(cookie);
+}
+
+void SubwayKiosk::addToCartItems(Chips chips) //장바구니 감자칩 토글에 추가
+{
+    // 선택된 쿠키 항목을 표시할 라벨 생성
+    QString chipsName = dataManager.sqlManager.GetChipsList().at(static_cast<int>(chips)); // 감자칩 이름 가져오기
+    QLabel *chipsLabel = new QLabel(chipsName, this);
+    chipsLabel->adjustSize(); // 라벨 크기 조정
+    chipsLayoutToggle->addWidget(chipsLabel);   // 감자칩 항목을 토글 아래에 추가
+
+    // 처음에는 항목을 숨김 상태로 설정
+    chipsLabel->setVisible(toggleChips->isChecked());
+
+    // 토글 상태에 따라 항목 보이기/숨기기 연결
+    connect(toggleChips, &QCheckBox::toggled, this, [chipsLabel]() {
+        chipsLabel->setVisible(!chipsLabel->isVisible()); // 토글 상태에 따라 항목 가시성 변경
+    });
+
+    // Chips 토글과 항목을 QListWidget에 추가
+    QListWidgetItem *itemChips = new QListWidgetItem(ui->cartList);
+    itemChips->setSizeHint(chipsToggleWidget->sizeHint()); // 항목의 크기를 위젯에 맞춤
+    ui->cartList->addItem(itemChips);
+    ui->cartList->setItemWidget(itemChips, chipsToggleWidget);
+
+    cart.Add(chips);
+}
+
+void SubwayKiosk::addToCartItems(Drink drink) //장바구니 음료 토글에 추가
+{
+    // 선택된 쿠키 항목을 표시할 라벨 생성
+    QString drinkName = dataManager.sqlManager.GetDrinkList().at(static_cast<int>(drink)); // 음료 이름 가져오기
+    QLabel *drinkLabel = new QLabel(drinkName, this);
+    drinkLabel->adjustSize(); // 라벨 크기 조정
+    drinkLayoutToggle->addWidget(drinkLabel);   // 감자칩 항목을 토글 아래에 추가
+
+    // 처음에는 항목을 숨김 상태로 설정
+    drinkLabel->setVisible(toggleChips->isChecked());
+
+    // 토글 상태에 따라 항목 보이기/숨기기 연결
+    connect(toggleChips, &QCheckBox::toggled, this, [drinkLabel]() {
+        drinkLabel->setVisible(!drinkLabel->isVisible()); // 토글 상태에 따라 항목 가시성 변경
+    });
+
+    // Drink 토글과 항목을 QListWidget에 추가
+    QListWidgetItem *itemDrink = new QListWidgetItem(ui->cartList);
+    itemDrink->setSizeHint(drinkToggleWidget->sizeHint()); // 항목의 크기를 위젯에 맞춤
+    ui->cartList->addItem(itemDrink);
+    ui->cartList->setItemWidget(itemDrink, drinkToggleWidget);
+
+    cart.Add(drink);
 }
 
 void SubwayKiosk::moveNext()
@@ -1120,7 +1267,7 @@ void SubwayKiosk::movePrev()
 #include "enum.h"
 
 void SubwayKiosk::SihooTest() {
-    DatabaseManager& dataManager = DatabaseManager::Instance();
+   //DatabaseManager& dataManager = DatabaseManager::Instance();
     //ServerManager& serverManager = ServerManager::Instance();
 
     Cart testCart = Cart();
