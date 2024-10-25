@@ -114,47 +114,47 @@ void ServerService() {
 /* 6-(2) 클라이언트 요청 처리 */
 void HandleClient(int clientSocket) {
     static int curIdx = 101;
-    char buffer[3000];
-    read(clientSocket, buffer, 30000);
-    cout << "Client request: \n" << buffer << endl;
+    while(1) {
+        char buffer[3000] = { 0 };
+        int readResult = read(clientSocket, buffer, 30000);
+        if(readResult <= 0) break;
+        cout << "Client request: \n" << buffer << endl;
 
-    // HTTP 요청에서 본문 추출
-    string request(buffer);
-    size_t contentPos = request.find("\r\n\r\n");
-    string body = "";
-    if (contentPos != string::npos) {
-        body = request.substr(contentPos + 4);
+        // HTTP 요청에서 본문 추출
+        string request(buffer);
+        size_t contentPos = request.find("\r\n\r\n");
+        string body = "";
+        if (contentPos != string::npos) {
+            body = request.substr(contentPos + 4);
+        }
+
+        // JSON 데이터를 파일에 저장
+        string fileName = "cart_" + to_string(curIdx) + ".json";
+        ofstream jsonFile("/home/pi/SubwayKiosk/Data/" + fileName);
+        if (jsonFile.is_open()) {
+            jsonFile << body;
+            jsonFile.close();
+            cout << "JSON data saved to /home/pi/SubwayKiosk/Data/" << fileName << endl;
+        } 
+        else {
+            cerr << "Failed to open file for writing" << endl;
+        }
+        // JSON 응답 생성
+        json j = json{{"message", "Data received successfully"},
+            {"status", "OK"}, {"waiting number", curIdx}, {"Type", "response"}};
+        string responseBody = j.dump();
+
+        // HTTP 응답 생성
+        ostringstream response;
+        response << "HTTP/1.1 200 OK\n" << "Content-Type: application/json\n"
+            << "Content-Length: " << responseBody.length() << "\n\n"
+            << responseBody;
+
+        // 응답 전송
+        write(clientSocket, response.str().c_str(), response.str().length());
+
+        curIdx++;
     }
-
-    // 받은 JSON 데이터 출력
-    cout << "Received JSON data: " << body << endl;
-
-    // JSON 데이터를 파일에 저장
-    string fileName = "cart_" + to_string(curIdx) + ".json";
-    ofstream jsonFile("/home/pi/SubwayKiosk/Data/" + fileName);
-    if (jsonFile.is_open()) {
-        jsonFile << body;
-        jsonFile.close();
-        cout << "JSON data saved to /home/pi/SubwayKiosk/Data/" << fileName << endl;
-    } 
-    else {
-        cerr << "Failed to open file for writing" << endl;
-    }
-    // JSON 응답 생성
-    json j = json{{"message", "Data received successfully"},
-        {"status", "OK"}, {"waiting number", curIdx}, {"Type", "response"}};
-    string responseBody = j.dump();
-
-    // HTTP 응답 생성
-    ostringstream response;
-    response << "HTTP/1.1 200 OK\n" << "Content-Type: application/json\n"
-        << "Content-Length: " << responseBody.length() << "\n\n"
-        << responseBody;
-
-    // 응답 전송
-    write(clientSocket, response.str().c_str(), response.str().length());
-
-    curIdx++;
     // 소켓 닫기
     close(clientSocket);
 }
