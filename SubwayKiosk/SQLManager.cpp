@@ -14,7 +14,7 @@ SQLManager::SQLManager()
 
     db.setHostName("localhost");
     db.setUserName("root");
-    db.setPassword("1234");
+    db.setPassword("0000");
     db.setDatabaseName("SandwichInfo");
     qDebug()<<db.driver();
     if(!db.open())
