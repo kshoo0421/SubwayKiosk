@@ -12,5 +12,7 @@ private:
 public:
     ServerManager& serverManager;
     SQLManager& sqlManager;
+
+    int SendCartToServer(const Cart& cart);
 };
 #endif
